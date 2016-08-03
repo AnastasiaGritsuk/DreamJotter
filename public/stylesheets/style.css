@@ -21,3 +21,16 @@ a.danger {
 .spacing {
   margin-bottom: 20px;
 }
+
+.btn-wrap {
+	text-align: right;
+	margin: 20px 0 0 0;
+}
+
+.note {
+	margin: 15px 0;
+}
+
+.login-service {
+	margin: 15px 0;	
+}
