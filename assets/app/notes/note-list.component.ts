@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { Note } from "../note.model";
+// import { Note } from "../note.model";
 import { NoteComponent } from "./note.component";
 import { NoteAddComponent } from "./note-add.component";
+import { NoteService } from "./note.service";
+import { Note } from "./note";
+import { OnInit } from '@angular/core';
 
 @Component({
 	selector: "note-list",
@@ -22,20 +25,26 @@ import { NoteAddComponent } from "./note-add.component";
 		</div>
 		<note-add [noteAdd] = "notes"></note-add>
 	`,
-	directives: [NoteComponent, NoteAddComponent]
+	directives: [NoteComponent, NoteAddComponent],
+	providers: [NoteService]
 })
 
-export class NoteListComponent {
-	public notes = [
-		{name: "purchase", value: "100$"},
-		{name: "friendLeo", value: "50$"},
-		{name: "child", value: "300$"},
-		{name: "train", value: "20$"}
-	];
+export class NoteListComponent implements OnInit{
+	public notes: Note[];
 
 	public selectedNotes = {};
 
+	constructor(private _noteService: NoteService) {}
+
 	onSelect(note){
 		this.selectedNotes = note;
+	}
+
+	getNotes() {
+		this._noteService.getNotes().then((notes: Note[]) => this.notes = notes);
+	}
+
+	ngOnInit(): any {
+		this.getNotes();
 	}
 }
