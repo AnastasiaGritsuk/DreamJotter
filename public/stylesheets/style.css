@@ -34,3 +34,7 @@ a.danger {
 .login-service {
 	margin: 15px 0;	
 }
+
+.form-control {
+  margin-bottom: 20px;
+}
