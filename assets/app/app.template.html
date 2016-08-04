@@ -6,31 +6,6 @@
 			</div>	
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<input [(ngModel)]="selectedNotes.name" type="text" class="form-control">
-		</div>
-	</div>
-	<hr>
-	<div class="row">
-		<div class="col-md-12">
-			<article class="panel panel-default" *ngFor="let note of notes"
-				(click)="onSelect(note)"
-				>
-				<div class="panel-body">
-					<span class="note-name text-primary">{{ note.name }}</span>
-					<span class="note-value"> {{ note.value }} </span>
-				</div>
-			</article>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="btn-wrap">
-				<button (click)="onSaveClick()"
-					type="button" class="btn btn-primary pull-left">Save</button>	
-				<button type="button" class="btn btn-primary">Find</button>
-			</div>
-		</div>
-	</div>
+	<note-list></note-list>
+	
 </div>
