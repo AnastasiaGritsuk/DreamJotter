@@ -9,7 +9,7 @@ import { OnInit } from '@angular/core';
 @Component({
 	selector: "note-list",
 	template: `
-		<note [note]="selectedNotes"></note>
+		<note [note]="selectedNotes" (childChanged)="childValue=$event"></note>
 		<hr>
 		<div class="row">
 			<div class="col-md-12">
@@ -23,13 +23,14 @@ import { OnInit } from '@angular/core';
 				</article>
 			</div>
 		</div>
-		<note-add [noteAdd] = "notes"></note-add>
+		<note-add [noteAdd] = "notes" [addedValue] = "childValue"></note-add>
 	`,
 	directives: [NoteComponent, NoteAddComponent],
 	providers: [NoteService]
 })
 
 export class NoteListComponent implements OnInit{
+	public childValue: string;
 	public notes: Note[];
 
 	public selectedNotes = {};
