@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Note } from "../note.model";
+import { NoteService } from "./note.service";
 
 @Component({
 	selector: "note-add",
@@ -14,14 +15,18 @@ import { Note } from "../note.model";
 			</div>
 		</div>
 	`,
-	inputs: ["noteAdd"]
+	inputs: ["noteAdd"],
+	providers: [NoteService]
 })
 
-export class NoteAddComponent {
-	public noteAdd = [];
+export class NoteAddComponent 
+{
+	constructor(private _noteService: NoteService) {}
 
 	onSaveClick() {
-    	const note = new Note('purchase', '1000$');
-    	this.noteAdd.push(note);
+    	//const note = new Note('purchase', '1000$');
+    	let note: = new Note();
+    	this._noteService.insertNote(note);
+
     }
 }
