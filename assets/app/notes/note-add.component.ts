@@ -25,9 +25,10 @@ export class NoteAddComponent
 	addedValue: string;
 	constructor(private _noteService: NoteService) {}
 
-	onSaveClick(value) {
-    	//const note = new Note('purchase', '1000$');
-    	let note = new Note("1", value);
+	onSaveClick(str) {
+    	var pos = str.indexOf(" ");
+
+    	let note = new Note(str.slice(0,pos), str.slice(pos+1));
     	this._noteService.insertNote(note);
     }
 }
