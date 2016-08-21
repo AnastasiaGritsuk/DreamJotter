@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NoteComponent } from "./note.component";
 import { NoteAddComponent } from "./note-add.component";
 import { NoteService } from "./note.service";
-import { Note } from "./note";
+import { Note } from "./note.model";
 import { OnInit } from '@angular/core';
 
 @Component({
@@ -18,7 +18,7 @@ import { OnInit } from '@angular/core';
 					>
 					<div class="panel-body">
 						<span class="note-name text-primary">{{ note.name }}</span>
-						<span class="note-value"> {{ note.value }} </span>
+						<span class="note-value"> {{ note.text }} </span>
 					</div>
 				</article>
 			</div>
@@ -31,8 +31,7 @@ import { OnInit } from '@angular/core';
 
 export class NoteListComponent implements OnInit{
 	public childValue: string;
-	public notes: Note[];
-
+	public notes: Note[] = [];
 	public selectedNotes = {};
 
 	constructor(private _noteService: NoteService) {}
@@ -41,11 +40,11 @@ export class NoteListComponent implements OnInit{
 		this.selectedNotes = note;
 	}
 
-	getNotes() {
-		//this._noteService.getNotes().then((notes: Note[]) => this.notes = notes);
-	}
-
-	ngOnInit(): any {
-		this.getNotes();
+	ngOnInit(){
+		this._noteService.getNotes()
+			.subscribe(
+				notes => this.notes = notes,
+				error => console.log(error)
+			);
 	}
 }

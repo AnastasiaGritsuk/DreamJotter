@@ -16,24 +16,23 @@ import { NoteComponent } from "./note.component";
 			</div>
 		</div>
 	`,
-	inputs: ["noteAdd", "addedValue"],
+	inputs: ["noteAdd","addedValue"],
 	providers: [NoteService]
 })
 
-export class NoteAddComponent 
+export class NoteAddComponent
 {
 	addedValue: string;
 	constructor(private _noteService: NoteService) {}
 
 	onSaveClick(str) {
     	var pos = str.indexOf(" ");
-    	const elem = new Note(str.slice(0,pos), str.slice(pos+1));
-
+    	const elem = new Note(str.slice(0,pos), str.slice(pos+1));\
 
     	this._noteService.insertNote(elem)
-    			.subscribe(
-    				() => console.log('success'),
-    				error => console.error(error)
-    			);
+			.subscribe(
+				() => console.log('success'),
+				error => console.error(error)
+			);
     }
 }
