@@ -42,7 +42,7 @@ export class NoteListComponent implements OnInit{
 	}
 
 	getNotes() {
-		this._noteService.getNotes().then((notes: Note[]) => this.notes = notes);
+		//this._noteService.getNotes().then((notes: Note[]) => this.notes = notes);
 	}
 
 	ngOnInit(): any {

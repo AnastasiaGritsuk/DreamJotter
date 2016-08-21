@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Note } from '../note.model';
+import { Note } from './note.model';
 import { NoteService } from "./note.service";
 import { NoteComponent } from "./note.component";
 
@@ -27,8 +27,13 @@ export class NoteAddComponent
 
 	onSaveClick(str) {
     	var pos = str.indexOf(" ");
+    	const elem = new Note(str.slice(0,pos), str.slice(pos+1));
 
-    	let note = new Note(str.slice(0,pos), str.slice(pos+1));
-    	this._noteService.insertNote(note);
+
+    	this._noteService.insertNote(elem)
+    			.subscribe(
+    				() => console.log('success'),
+    				error => console.error(error)
+    			);
     }
 }

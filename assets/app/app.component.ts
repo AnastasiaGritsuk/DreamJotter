@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Note } from "./note.model";
+import { Note } from "./notes/note.model";
 import { NoteListComponent } from "./notes/note-list.component";
 
 @Component({
@@ -8,6 +8,7 @@ import { NoteListComponent } from "./notes/note-list.component";
     templateUrl: 'app.template.html',
     directives: [NoteListComponent]
 })
+
 export class AppComponent {
    
 }
