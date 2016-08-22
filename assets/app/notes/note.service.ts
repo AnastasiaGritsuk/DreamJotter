@@ -28,4 +28,5 @@ export class NoteService {
 		const headers = new Headers({'Content-Type': 'application/json'});
 		return this.http.post('http://localhost:3000/note', body, {headers: headers});
 	}
+
 }

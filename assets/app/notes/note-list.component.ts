@@ -24,7 +24,7 @@ import { OnInit } from '@angular/core';
 				<div class="btn-wrap">
 					<button (click)="onSaveClick(childValue)"
 						type="button" class="btn btn-primary pull-left">Save</button>	
-					<button type="button" class="btn btn-primary">Find</button>
+					<button (click)="onFindClick(childValue)" type="button" class="btn btn-primary">Find</button>
 				</div>
 			</div>
 		</div>
@@ -55,10 +55,22 @@ export class NoteListComponent implements OnInit{
     	this._noteService.insertNote(elem)
 			.subscribe(
 				() => {
-					this.childValue = '';
 					console.log('success')
 				},
 				error => console.error(error)
 			);
+    }
+
+    onFindClick(key) {
+    	let arr = [];
+
+    	for(var i=0;i<this.notes.length;i++) {
+    		if(key === this.notes[i].name) {
+    			arr.push(this.notes[i]);
+    		}
+    	}
+
+    	this.notes = arr;
+
     }
 }
