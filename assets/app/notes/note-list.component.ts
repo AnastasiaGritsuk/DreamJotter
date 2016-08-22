@@ -11,9 +11,7 @@ import { OnInit } from '@angular/core';
 		<hr>
 		<div class="row">
 			<div class="col-md-12">
-				<article class="panel panel-default" *ngFor="let note of notes"
-					(click)="onSelect(note)"
-					>
+				<article class="panel panel-default" *ngFor="let note of notes">
 					<div class="panel-body">
 						<span class="note-name text-primary">{{ note.name }}</span>
 						<span class="note-value"> {{ note.text }} </span>
@@ -56,7 +54,10 @@ export class NoteListComponent implements OnInit{
 
     	this._noteService.insertNote(elem)
 			.subscribe(
-				() => console.log('success'),
+				() => {
+					this.childValue = '';
+					console.log('success')
+				},
 				error => console.error(error)
 			);
     }

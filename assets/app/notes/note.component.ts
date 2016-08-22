@@ -5,7 +5,7 @@ import { Component, EventEmitter } from '@angular/core';
 	template: `
 		<div class="row">
 			<div class="col-md-12">
-				<input [(ngModel)]="note.name" type="text" #childInput (keyup)="onChange(childInput.value)" 
+				<input [(ngModel)]="childInput.value" type="text" #childInput (keyup)="onChange(childInput.value)" 
 				class="form-control">
 			</div>
 		</div>
