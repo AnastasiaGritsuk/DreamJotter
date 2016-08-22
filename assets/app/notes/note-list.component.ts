@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-// import { Note } from "../note.model";
 import { NoteComponent } from "./note.component";
-import { NoteAddComponent } from "./note-add.component";
 import { NoteService } from "./note.service";
 import { Note } from "./note.model";
 import { OnInit } from '@angular/core';
@@ -9,7 +7,7 @@ import { OnInit } from '@angular/core';
 @Component({
 	selector: "note-list",
 	template: `
-		<note [note]="selectedNotes" (childChanged)="childValue=$event"></note>
+		<note (childChanged)="childValue=$event"></note>
 		<hr>
 		<div class="row">
 			<div class="col-md-12">
@@ -23,22 +21,25 @@ import { OnInit } from '@angular/core';
 				</article>
 			</div>
 		</div>
-		<note-add [noteAdd] = "notes" [addedValue] = "childValue"></note-add>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="btn-wrap">
+					<button (click)="onSaveClick(childValue)"
+						type="button" class="btn btn-primary pull-left">Save</button>	
+					<button type="button" class="btn btn-primary">Find</button>
+				</div>
+			</div>
+		</div>
 	`,
-	directives: [NoteComponent, NoteAddComponent],
+	directives: [NoteComponent],
 	providers: [NoteService]
 })
 
 export class NoteListComponent implements OnInit{
 	public childValue: string;
-	public notes: Note[] = [];
-	public selectedNotes = {};
+	notes: Note[] = [];
 
 	constructor(private _noteService: NoteService) {}
-
-	onSelect(note){
-		this.selectedNotes = note;
-	}
 
 	ngOnInit(){
 		this._noteService.getNotes()
@@ -47,4 +48,16 @@ export class NoteListComponent implements OnInit{
 				error => console.log(error)
 			);
 	}
+
+	onSaveClick(str) {
+    	var pos = str.indexOf(" ");
+    	const elem = new Note(str.slice(0,pos), str.slice(pos+1));
+    	this.notes.push(elem);
+
+    	this._noteService.insertNote(elem)
+			.subscribe(
+				() => console.log('success'),
+				error => console.error(error)
+			);
+    }
 }
