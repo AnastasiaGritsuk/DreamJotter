@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-//import { NoteComponent } from "./note.component";
+import { NoteComponent } from "./note.component";
 import { NoteService } from "./note.service";
 import { Note } from "./note.model";
 import { OnInit } from '@angular/core';
@@ -8,7 +8,7 @@ import { OnInit } from '@angular/core';
 	moduleId: module.id,
 	selector: "note-list",
 	templateUrl: 'note-list.template.html',
-	//directives: [NoteComponent],
+	directives: [NoteComponent],
 	providers: [NoteService]
 })
 
