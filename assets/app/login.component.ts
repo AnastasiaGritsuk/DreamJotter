@@ -9,13 +9,20 @@ import { User } from "./user.model";
     providers: [LoginService]
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
 	constructor(private _loginService: LoginService) {}
 
 	newUser: User;
 
-	onSubmit() {
+	ngOnInit(){
+		this.newUser = {
+			username: '',
+			password: ''
+		}
+	}
 
+	onSubmit() {
+		this._loginService.auth(this.newUser);
 	}
 }

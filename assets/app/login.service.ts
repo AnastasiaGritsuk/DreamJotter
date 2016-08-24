@@ -8,4 +8,7 @@ import { User } from "./user.model";
 @Injectable()
 export class LoginService {
 
+	auth(creds) {
+		console.log(creds);
+	}
 }
