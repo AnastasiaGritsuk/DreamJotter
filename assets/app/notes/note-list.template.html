@@ -5,14 +5,14 @@
 		<article class="panel panel-default" *ngFor="let note of notes">
 			<div class="panel-body">
 				<span class="note-name text-primary">{{ note.name }}</span>
-				<span class="note-value"> {{ note.text }} </span>
+				<span class="note-value"> {{ note.text }}</span>
 			</div>
 		</article>
 	</div>
 </div>
 <div class="row">
 	<div class="col-md-12">
-		<div class="btn-wrap">
+		<div class="btn-wrap" [userToken]>
 			<button (click)="onSaveClick(childValue)"
 				type="button" class="btn btn-primary pull-left">Save</button>	
 			<button (click)="onFindClick(childValue)" type="button" class="btn btn-primary">Find</button>

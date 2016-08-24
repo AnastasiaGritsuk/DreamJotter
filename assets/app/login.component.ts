@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit{
 	constructor(private _loginService: LoginService) {}
 
 	newUser: User;
+	public userToken: string;
 
 	ngOnInit(){
 		this.newUser = {
@@ -26,9 +27,7 @@ export class LoginComponent implements OnInit{
 	onSubmit() {
 		this._loginService.checkUser(this.newUser)
 			.subscribe(
-				() => {
-					console.log('success')
-				},
+				userToken => this.userToken = userToken,
 				error => console.error(error)
 			);
 	}

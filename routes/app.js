@@ -46,13 +46,28 @@ router.post('/auth', function(req, res, next) {
         '4user': '1234'
     }
 
+    var guid = (function() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return function() {
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                s4() + '-' + s4() + s4() + s4();
+        };
+    })();
+
+    var guid = guid();
+
     var name = req.body.username;
     var pass = req.body.password;
 
     
     if(loggedUsers[name] === pass) {
         return res.status(200).json({
-            message:'User is logged'
+            message:'User is logged',
+            userToken: guid
         });
     } 
     
