@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginService } from "./login.service";
+import { User } from "./user.model";
 
 @Component({
     moduleId: module.id,
@@ -9,7 +10,12 @@ import { LoginService } from "./login.service";
 })
 
 export class LoginComponent {
-   onSubmit() {
 
-   }
+	constructor(private _loginService: LoginService) {}
+
+	newUser: User;
+
+	onSubmit() {
+
+	}
 }

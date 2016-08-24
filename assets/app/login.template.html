@@ -5,12 +5,14 @@
 				<label for="username">Username</label>
 				<input class="form-control" type="text" id="username" 
 					ngControl="username"
+					[(ngModel)]="newUser.username"
 					required>
 			</div>
 			<div>
 				<label for="password">Password</label>
 				<input class="form-control" type="text" id="password" 
 					ngControl="password"
+					[(ngModel)]="newUser.password"
 					required>
 			</div>
 			<div class="login-service">
