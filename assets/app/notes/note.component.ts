@@ -1,15 +1,9 @@
 import { Component, EventEmitter } from '@angular/core';
 
 @Component({
+	moduleId: module.id,
 	selector: "note",
-	template: `
-		<div class="row">
-			<div class="col-md-12">
-				<input [(ngModel)]="childInput.value" type="text" #childInput (keyup)="onChange(childInput.value)" 
-				class="form-control">
-			</div>
-		</div>
-	`,
+	templateUrl: "note.component.template.html",
 	inputs: ["note"],
 	outputs: ['childChanged']
 })

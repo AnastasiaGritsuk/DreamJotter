@@ -1,35 +1,14 @@
 import { Component } from '@angular/core';
-import { NoteComponent } from "./note.component";
+//import { NoteComponent } from "./note.component";
 import { NoteService } from "./note.service";
 import { Note } from "./note.model";
 import { OnInit } from '@angular/core';
 
 @Component({
+	moduleId: module.id,
 	selector: "note-list",
-	template: `
-		<note (childChanged)="childValue=$event"></note>
-		<hr>
-		<div class="row">
-			<div class="col-md-12">
-				<article class="panel panel-default" *ngFor="let note of notes">
-					<div class="panel-body">
-						<span class="note-name text-primary">{{ note.name }}</span>
-						<span class="note-value"> {{ note.text }} </span>
-					</div>
-				</article>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="btn-wrap">
-					<button (click)="onSaveClick(childValue)"
-						type="button" class="btn btn-primary pull-left">Save</button>	
-					<button (click)="onFindClick(childValue)" type="button" class="btn btn-primary">Find</button>
-				</div>
-			</div>
-		</div>
-	`,
-	directives: [NoteComponent],
+	templateUrl: 'note-list.template.html',
+	//directives: [NoteComponent],
 	providers: [NoteService]
 })
 

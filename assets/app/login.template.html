@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="col-md-6">
+		<form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+			<div>
+				<label for="username">Username</label>
+				<input class="form-control" type="text" id="username" 
+					ngControl="username"
+					required>
+			</div>
+			<div>
+				<label for="password">Password</label>
+				<input class="form-control" type="text" id="password" 
+					ngControl="password"
+					required>
+			</div>
+			<div class="login-service">
+				<button type="submit" class="btn btn-primary">Login</button>
+			</div>
+		</form>	
+	</div>
+</div>
