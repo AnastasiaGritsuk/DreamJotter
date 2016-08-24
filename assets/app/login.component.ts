@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from "./login.service";
 import { User } from "./user.model";
+import { OnInit } from '@angular/core';
 
 @Component({
     moduleId: module.id,
@@ -23,6 +24,12 @@ export class LoginComponent implements OnInit{
 	}
 
 	onSubmit() {
-		this._loginService.auth(this.newUser);
+		this._loginService.checkUser(this.newUser)
+			.subscribe(
+				() => {
+					console.log('success')
+				},
+				error => console.error(error)
+			);
 	}
 }

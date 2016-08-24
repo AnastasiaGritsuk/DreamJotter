@@ -38,4 +38,28 @@ router.post('/note', function(req, res, next) {
     });
 });
 
+router.post('/auth', function(req, res, next) {
+    var loggedUsers = {
+        '1user': '1234',
+        '2user': '1234',
+        '3user': '1234',
+        '4user': '1234'
+    }
+
+    var name = req.body.username;
+    var pass = req.body.password;
+
+    
+    if(loggedUsers[name] === pass) {
+        return res.status(200).json({
+            message:'User is logged'
+        });
+    } 
+    
+    return res.status(500).json({
+        message: 'User does not exist'
+    });
+    
+});
+
 module.exports = router;
