@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NoteComponent } from "./note.component";
-import { NoteService } from "./note.service";
+import { AppModel } from "../app.model";
 import { Note } from "./note.model";
 import { OnInit } from '@angular/core';
 
@@ -9,22 +9,21 @@ import { OnInit } from '@angular/core';
 	moduleId: module.id,
 	selector: "note-list",
 	templateUrl: 'note-list.template.html',
-	directives: [NoteComponent],
-	providers: [NoteService]
+	directives: [NoteComponent]
 })
 
 export class NoteListComponent implements OnInit{
 	public childValue: string;
 	notes: Note[] = [];
 
-	constructor(private _noteService: NoteService) {}
+	constructor(private _app: AppModel) {}
 
 	ngOnInit() {
-		this._noteService.getNotes()
-			.subscribe(
-				notes => this.notes = notes,
-				error => console.log(error)
-			);
+		//this._app.find('')
+		//	.subscribe(
+		//		notes => this.notes = notes,
+		//		error => console.log(error)
+		//	);
 	}
 
 	onSaveClick(str) {
@@ -33,7 +32,7 @@ export class NoteListComponent implements OnInit{
 
     	this.notes.push(note);
 
-    	this._noteService.insertNote(note)
+    	this._app.save(note)
 			.subscribe(
 				() => {
 					console.log('success')
