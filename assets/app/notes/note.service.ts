@@ -10,7 +10,17 @@ export class NoteService {
 	constructor (private http: Http) {};
 
 	login(user:string, pwd:string):Observable<string> {
-		return null;
+		let headers = new Headers({
+			'Content-Type': 'application/json',
+			'Authentification' : 'Basic '+ btoa(user+':'+pwd)
+		});
+
+		return this.http.post('http://localhost:3000/auth', '', {headers: headers})
+			.map ( (data: Response) => {
+				let extracted = data.json();
+
+				return extracted.userToken;
+			});
 	}
 
 	getNotes() {
