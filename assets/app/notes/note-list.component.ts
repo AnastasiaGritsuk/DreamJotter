@@ -4,6 +4,7 @@ import { NoteService } from "./note.service";
 import { Note } from "./note.model";
 import { OnInit } from '@angular/core';
 
+
 @Component({
 	moduleId: module.id,
 	selector: "note-list",
@@ -18,7 +19,7 @@ export class NoteListComponent implements OnInit{
 
 	constructor(private _noteService: NoteService) {}
 
-	ngOnInit(){
+	ngOnInit() {
 		this._noteService.getNotes()
 			.subscribe(
 				notes => this.notes = notes,
@@ -27,11 +28,12 @@ export class NoteListComponent implements OnInit{
 	}
 
 	onSaveClick(str) {
-    	var pos = str.indexOf(" ");
-    	const elem = new Note(str.slice(0,pos), str.slice(pos+1));
-    	this.notes.push(elem);
+    	let pos = str.indexOf(" ");
+    	let note = {name:str.slice(0,pos), text:str.slice(pos+1) };
 
-    	this._noteService.insertNote(elem)
+    	this.notes.push(note);
+
+    	this._noteService.insertNote(note)
 			.subscribe(
 				() => {
 					console.log('success')

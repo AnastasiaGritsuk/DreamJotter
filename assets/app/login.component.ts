@@ -10,7 +10,7 @@ import { OnInit } from '@angular/core';
     providers: [LoginService]
 })
 
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
 	constructor(private _loginService: LoginService) {}
 
@@ -25,9 +25,12 @@ export class LoginComponent implements OnInit{
 	}
 
 	onSubmit() {
-		this._loginService.checkUser(this.newUser)
+		this._loginService.auth(this.newUser)
 			.subscribe(
-				userToken => this.userToken = userToken,
+				userToken => {
+					this.userToken = userToken;
+
+				},
 				error => console.error(error)
 			);
 	}
