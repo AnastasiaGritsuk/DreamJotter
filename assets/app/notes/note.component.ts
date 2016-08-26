@@ -3,7 +3,7 @@ import { Component, EventEmitter } from '@angular/core';
 @Component({
 	moduleId: module.id,
 	selector: "note",
-	templateUrl: "note.component.template.html",
+	templateUrl: "note.template.html",
 	inputs: ["note"],
 	outputs: ['childChanged']
 })

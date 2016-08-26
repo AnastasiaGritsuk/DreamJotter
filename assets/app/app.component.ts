@@ -13,6 +13,4 @@ import { AppModel } from "./app.model";
 
 export class AppComponent{
 	constructor(private _app:AppModel) {}
-
-	logged: boolean = this._app.logged;
 }
