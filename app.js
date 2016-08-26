@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var appRoutes = require('./routes/app');
-
 var app = express();
 mongoose.connect('localhost:27017/notesDb');
 

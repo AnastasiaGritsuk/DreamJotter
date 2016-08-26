@@ -11,6 +11,7 @@ export class AppModel {
 
 	login(user:string, pwd:string) {
 		return this.svc.login(user, pwd).subscribe(token => {
+			console.log(token);
 			this.securityToken = token;
 		});
 	}

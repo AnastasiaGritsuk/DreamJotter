@@ -22,6 +22,14 @@ export class NoteService {
 			});
 	}
 
+	insertNote(note: Note, token:string): Observable<any> {
+		let body = JSON.stringify(note);
+		let headers = new Headers(
+			{'Content-Type': 'application/json'
+			});
+		return this.http.post('http://localhost:3000/note', body, {headers: headers});
+	}
+
 	getNotes(key:string, token:string) {
 		return this.http.get('http://localhost:3000/notes')
 			.map( (data: Response) => {
@@ -34,13 +42,5 @@ export class NoteService {
 
 				return notesArray;
 			});
-	}
-
-	insertNote(note: Note, token:string): Observable<any> {
-		let body = JSON.stringify(note);
-		let headers = new Headers(
-			{'Content-Type': 'application/json'
-			});
-		return this.http.post('http://localhost:3000/note', body, {headers: headers});
 	}
 }

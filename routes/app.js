@@ -1,4 +1,5 @@
 var express = require('express');
+var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
 var Note = require('../models/note')
 
@@ -60,11 +61,16 @@ router.post('/auth', function(req, res, next) {
 
     var guid = guid();
 
-    var name = req.body.username;
-    var pass = req.body.password;
+    var creds = basicAuthParser(req.headers.authorization);
+    var username = creds.username;
+    var password = creds.password;
+    
+    console.log('Creds' + creds);
+    console.log('Output' + username + password);
 
     
-    if(loggedUsers[name] === pass) {
+    if(loggedUsers[username] === password) {
+        console.log(loggedUsers[username]);
         return res.status(200).json({
             message:'User is logged',
             userToken: guid
