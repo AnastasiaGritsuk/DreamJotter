@@ -11,11 +11,10 @@ export class AppModel {
 
 	login(user:string, pwd:string) {
 		return this.svc.login(user, pwd)
-			.subscribe(token => {
-				this.securityToken = token;
-				console.log(this.securityToken);
-				this.logged = true;
-				console.log(this.logged);
+			.subscribe(
+				token => {
+					this.securityToken = token;
+					this.logged = true;
 			});
 	}
 
