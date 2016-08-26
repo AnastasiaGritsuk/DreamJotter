@@ -18,6 +18,10 @@ export class AppModel {
 			});
 	}
 
+	logout() {
+		return this.svc.logout(this.securityToken);
+	};
+
 	save(note:Note) {
 		return this.svc.insertNote(note, this.securityToken);
 	}

@@ -24,7 +24,9 @@
 				{{ newUser.username }}
 			</div>
 			<div class="panel-body">
-				<button type="submit" class="btn btn-primary">Logout</button>
+				<button type="button"
+				(click) = "onLogout()"
+				class="btn btn-primary">Logout</button>
 			</div>
 		</div>
 	</div>

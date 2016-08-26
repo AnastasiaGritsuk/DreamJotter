@@ -22,11 +22,15 @@ export class NoteService {
 			});
 	}
 
+	logout(token:string) {
+
+	}
+
 	insertNote(note: Note, token:string): Observable<any> {
 		let body = JSON.stringify(note);
-		let headers = new Headers(
-			{'Content-Type': 'application/json'
-			});
+		let headers = new Headers({
+			'Authorization': token
+		});
 		return this.http.post('http://localhost:3000/note', body, {headers: headers});
 	}
 
