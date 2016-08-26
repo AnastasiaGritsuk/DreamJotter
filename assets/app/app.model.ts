@@ -5,6 +5,7 @@ import {Note} from './notes/note.model';
 @Injectable()
 export class AppModel {
 	private securityToken: string;
+	public logged: boolean = false;
 	
 	constructor(private svc:NoteService){
 	}

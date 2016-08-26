@@ -3,7 +3,6 @@ import { Note } from "./notes/note.model";
 import { NoteListComponent } from "./notes/note-list.component";
 import { LoginComponent } from "./login.component";
 import { AppModel } from "./app.model";
-import { OnInit } from '@angular/core';
 
 @Component({
     moduleId: module.id,
@@ -12,9 +11,8 @@ import { OnInit } from '@angular/core';
     directives: [NoteListComponent, LoginComponent]
 })
 
-export class AppComponent implements OnInit{
-	constructor(private app:AppModel) {}
+export class AppComponent{
+	constructor(private _app:AppModel) {}
 
-	ngOnInit() {
-	}
+	logged: boolean = this._app.logged;
 }

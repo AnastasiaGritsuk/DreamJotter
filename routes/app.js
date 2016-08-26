@@ -65,10 +65,6 @@ router.post('/auth', function(req, res, next) {
     var username = creds.username;
     var password = creds.password;
     
-    console.log('Creds' + creds);
-    console.log('Output' + username + password);
-
-    
     if(loggedUsers[username] === password) {
         console.log(loggedUsers[username]);
         return res.status(200).json({
