@@ -1,6 +1,8 @@
 import {NoteService} from './notes/note.service';
+import { Injectable } from '@angular/core';
 import {Note} from './notes/note.model';
 
+@Injectable()
 export class AppModel {
 	private securityToken: string;
 	

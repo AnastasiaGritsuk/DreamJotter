@@ -3,7 +3,6 @@ import { Note } from "./notes/note.model";
 import { NoteListComponent } from "./notes/note-list.component";
 import { LoginComponent } from "./login.component";
 import { AppModel } from "./app.model";
-import { NoteService } from "./notes/note.service";
 import { OnInit } from '@angular/core';
 
 @Component({
@@ -14,7 +13,7 @@ import { OnInit } from '@angular/core';
 })
 
 export class AppComponent implements OnInit{
-	constructor(private _appService: NoteService, private app:AppModel) {}
+	constructor(private app:AppModel) {}
 
 	ngOnInit() {
 	}
