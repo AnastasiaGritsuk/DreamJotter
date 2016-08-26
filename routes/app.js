@@ -3,6 +3,8 @@ var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
 var Note = require('../models/note')
 
+var securityToken = null;
+
 router.get('/', function(req, res, next) {
     res.render('index');
 });
@@ -66,10 +68,11 @@ router.post('/auth', function(req, res, next) {
     var password = creds.password;
     
     if(loggedUsers[username] === password) {
-        console.log(loggedUsers[username]);
+        securityToken = guid;
+
         return res.status(200).json({
             message:'User is logged',
-            userToken: guid
+            userToken: securityToken
         });
     } 
     
@@ -80,7 +83,19 @@ router.post('/auth', function(req, res, next) {
 });
 
 router.post('/logout', function(req, res, next) {
-    
+    var token = req.headers.authorization;
+    if(token == securityToken) {
+        securityToken = null;
+
+        return res.status(201).json({
+            message:'User logout successfully!'
+        });
+    }
+
+    return res.status(500).json({
+        message: 'User does not exist'
+    });
+
 });
 
 module.exports = router;

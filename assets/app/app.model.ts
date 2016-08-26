@@ -19,7 +19,11 @@ export class AppModel {
 	}
 
 	logout() {
-		return this.svc.logout(this.securityToken);
+		return this.svc.logout(this.securityToken)
+			.subscribe(
+				() => {
+					this.logged = false;
+				});
 	};
 
 	save(note:Note) {

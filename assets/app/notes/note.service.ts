@@ -23,13 +23,17 @@ export class NoteService {
 	}
 
 	logout(token:string) {
+		let headers = new Headers({
+			'Authorization': token
+		});
 
+		return this.http.post('http://localhost:3000/logout', '', {headers: headers})
 	}
 
 	insertNote(note: Note, token:string): Observable<any> {
 		let body = JSON.stringify(note);
 		let headers = new Headers({
-			'Authorization': token
+			//'Authorization': token
 		});
 		return this.http.post('http://localhost:3000/note', body, {headers: headers});
 	}
