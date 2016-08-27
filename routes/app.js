@@ -19,8 +19,18 @@ router.post('/note', function(req, res, next) {
     note.name = req.body.name;
     note.text = req.body.text;
 
-    return res.status(200).json({
+    var token = req.headers.authorization;
+    var key = userMap[token];
+    if(key) {
+        if(!savedNotes[key]){
+            savedNotes[key] = [note];
+        } else {
+            savedNotes[key].push(note);
+        }
+    }
 
+    return res.status(200).json({
+        message:'Save data successfully!'
     })
 
 });
