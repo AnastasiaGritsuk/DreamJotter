@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     res.render('index');
 });
 
-router.get('/notes', function(req, res, next) {
+router.get('/note', function(req, res, next) {
     Note.find(function(err, notes) {
         if (err) {
             return res.status(500).json({

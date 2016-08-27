@@ -39,7 +39,7 @@ export class NoteService {
 	}
 
 	getNotes(key:string, token:string) {
-		return this.http.get('http://localhost:3000/notes')
+		return this.http.get('http://localhost:3000/note')
 			.map( (data: Response) => {
 				let extracted = data.json();
 				let notesArray: Note[] = [];
