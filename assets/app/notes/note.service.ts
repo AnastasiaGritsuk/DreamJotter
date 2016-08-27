@@ -11,6 +11,7 @@ export class NoteService {
 
 	login(user:string, pwd:string):Observable<string> {
 		let headers = new Headers({
+			'Content-Type': 'application/json',
 			'Authorization' : 'Basic '+ btoa(user+':'+pwd)
 		});
 
@@ -33,7 +34,8 @@ export class NoteService {
 	insertNote(note: Note, token:string): Observable<any> {
 		let body = JSON.stringify(note);
 		let headers = new Headers({
-			//'Authorization': token
+			'Content-Type': 'application/json',
+			'Authorization': token
 		});
 		return this.http.post('http://localhost:3000/note', body, {headers: headers});
 	}

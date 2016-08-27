@@ -30,15 +30,7 @@ export class NoteListComponent implements OnInit{
     	let pos = str.indexOf(" ");
     	let note = {name:str.slice(0,pos), text:str.slice(pos+1) };
 
-    	this.notes.push(note);
-
-    	this._app.save(note)
-			.subscribe(
-				() => {
-					console.log('success')
-				},
-				error => console.error(error)
-			);
+    	this._app.save(note);
     }
 
     onFindClick(key) {

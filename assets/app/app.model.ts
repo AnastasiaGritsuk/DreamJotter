@@ -27,7 +27,11 @@ export class AppModel {
 	};
 
 	save(note:Note) {
-		return this.svc.insertNote(note, this.securityToken);
+		return this.svc.insertNote(note, this.securityToken)
+			.subscribe(
+				() => {
+
+				});
 	}
 
 	find(key:string) {
