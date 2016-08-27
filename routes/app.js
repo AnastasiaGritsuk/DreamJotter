@@ -1,7 +1,8 @@
 var express = require('express');
 var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
-var Note = require('../models/note')
+var Note = require('../models/note');
+var registerUsers = require('./registerUsers');
 
 var securityToken = null;
 
@@ -42,13 +43,6 @@ router.post('/note', function(req, res, next) {
 });
 
 router.post('/auth', function(req, res, next) {
-    var loggedUsers = {
-        '1user': '1234',
-        '2user': '1234',
-        '3user': '1234',
-        '4user': '1234'
-    }
-
     var guid = (function() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000)
@@ -67,7 +61,7 @@ router.post('/auth', function(req, res, next) {
     var username = creds.username;
     var password = creds.password;
     
-    if(loggedUsers[username] === password) {
+    if(registerUsers[username] === password) {
         securityToken = guid;
 
         return res.status(200).json({
