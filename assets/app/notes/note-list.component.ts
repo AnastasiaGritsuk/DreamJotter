@@ -34,15 +34,7 @@ export class NoteListComponent implements OnInit{
     }
 
     onFindClick(key) {
-    	let arr = [];
-
-    	for(var i=0;i<this.notes.length;i++) {
-    		if(key === this.notes[i].name) {
-    			arr.push(this.notes[i]);
-    		}
-    	}
-
-    	this.notes = arr;
+    	
 
     }
 }
