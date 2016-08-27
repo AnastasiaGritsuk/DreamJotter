@@ -62,11 +62,17 @@ router.post('/auth', function(req, res, next) {
     var password = creds.password;
     
     if(registerUsers[username] === password) {
-        securityToken = guid;
+        userMap[guid] = username;
+
+        for(var key in userMap) {
+            console.log('Key ' + key + 'value '+ userMap[key]);
+        }
+
+       // securityToken = guid;
 
         return res.status(200).json({
             message:'User is logged',
-            userToken: securityToken
+            userToken: guid
         });
     } 
     
@@ -78,8 +84,8 @@ router.post('/auth', function(req, res, next) {
 
 router.delete('/auth', function(req, res, next) {
     var token = req.headers.authorization;
-    if(token == securityToken) {
-        securityToken = null;
+    if(userMap[token]) {
+        delete userMap[token];
 
         return res.status(200).json({
             message:'User logout successfully!'
@@ -91,5 +97,7 @@ router.delete('/auth', function(req, res, next) {
     });
 
 });
+
+var userMap = {};
 
 module.exports = router;
