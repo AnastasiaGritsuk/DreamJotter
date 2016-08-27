@@ -27,7 +27,7 @@ export class NoteService {
 			'Authorization': token
 		});
 
-		return this.http.post('http://localhost:3000/logout', '', {headers: headers})
+		return this.http.delete('http://localhost:3000/auth', {headers: headers})
 	}
 
 	insertNote(note: Note, token:string): Observable<any> {

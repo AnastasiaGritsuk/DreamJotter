@@ -57,4 +57,4 @@ gulp.task('watch', function () {
     gulp.watch(appDev + '**/*.{html,htm,css}', ['build-copy']);
 });
 
-gulp.task('default', ['watch', 'build-ts', 'build-copy']);
+gulp.task('default', ['build-ts', 'build-copy']);

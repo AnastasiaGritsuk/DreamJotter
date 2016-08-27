@@ -35,7 +35,7 @@ router.post('/note', function(req, res, next) {
     		});
     	}
 
-    	return res.status(201).json({
+    	return res.status(200).json({
     		message:'Save data successfully!'
     	});
     });
@@ -82,12 +82,12 @@ router.post('/auth', function(req, res, next) {
     
 });
 
-router.post('/logout', function(req, res, next) {
+router.delete('/auth', function(req, res, next) {
     var token = req.headers.authorization;
     if(token == securityToken) {
         securityToken = null;
 
-        return res.status(201).json({
+        return res.status(200).json({
             message:'User logout successfully!'
         });
     }
