@@ -47,7 +47,7 @@ export class NoteService {
 			'Authorization': token
 		});
 
-		return this.http.get('http://loqcalhost:3000/auth', {headers:headers,search: key})
+		return this.http.get('http://loqcalhost:3000/note', {headers:headers,search: key})
 			.map( (data: Response) => {
 				let extracted = data.json();
 				
