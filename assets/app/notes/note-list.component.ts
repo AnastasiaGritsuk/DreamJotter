@@ -34,7 +34,6 @@ export class NoteListComponent implements OnInit{
     }
 
     onFindClick(key) {
-    	
-
+		this._app.find(key);
     }
 }

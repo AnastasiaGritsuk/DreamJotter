@@ -40,17 +40,18 @@ export class NoteService {
 		return this.http.post('http://localhost:3000/note', body, {headers: headers});
 	}
 
-	getNotes(key:string, token:string) {
-		return this.http.get('http://localhost:3000/note')
+	getNotes(key:string, token:string): Observable<any> {
+
+		let headers = new Headers({
+			'Content-Type': 'application/json',
+			'Authorization': token
+		});
+
+		return this.http.get('http://loqcalhost:3000/auth', {headers:headers,search: key})
 			.map( (data: Response) => {
 				let extracted = data.json();
-				let notesArray: Note[] = [];
-
-				for (let note of extracted.data) {
-					notesArray.push(note);
-				}
-
-				return notesArray;
+				
+				return extracted;
 			});
 	}
 }

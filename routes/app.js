@@ -10,7 +10,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/note', function(req, res, next) {
+    var token = req.headers.authorization;
+    console.log(token);
+    var key = userMap[token];
     
+    if(key) {
+        return res.status(200).json({
+            message:'Data fetched successfully!',
+            data: savedNotes[key]
+        });
+    }
 });
 
 router.post('/note', function(req, res, next) {
@@ -26,7 +35,7 @@ router.post('/note', function(req, res, next) {
             savedNotes[key] = [note];
         } else {
             savedNotes[key].push(note);
-        }
+        }     
     }
 
     return res.status(200).json({
