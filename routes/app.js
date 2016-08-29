@@ -13,15 +13,17 @@ router.get('/note/:key', function(req, res, next) {
     var token = req.headers.authorization;
     console.log(token);
     var user = userMap[token];
-    var key = ???
-    
+    var key = req.params.key;
+
     if(user) {
         return res.status(200).json({
             message:'Data fetched successfully!',
             data: savedNotes[key]
         });
     } else {
-        what the hell ?
+        return res.status(401).json({
+            message: 'Bad request'
+        });
     }
 });
 
