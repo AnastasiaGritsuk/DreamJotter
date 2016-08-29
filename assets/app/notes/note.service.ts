@@ -48,8 +48,10 @@ export class NoteService {
 		});
 
 		console.log('getNotes: begin');
-
-		return this.http.get(`/note/${key}`, {headers:headers}).map( (data: Response) => {
+		
+		var url = `/note/${key}`;
+		return this.http.get(url, {headers:headers})
+			.map( (data: Response) => {
 				let extracted = data.json();
 				
 				return extracted.data;

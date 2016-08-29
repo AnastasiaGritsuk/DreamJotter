@@ -11,15 +11,33 @@ router.get('/', function(req, res, next) {
 
 router.get('/note/:key', function(req, res, next) {
     var token = req.headers.authorization;
-    console.log(token);
+    console.log("Get token " + token);
     var user = userMap[token];
     var key = req.params.key;
+    var result = [];
 
+    console.log("Get key " + key);
+    console.log("Get user " + user);
+    console.log("Get savedNotes " + savedNotes[user]);
     if(user) {
-        return res.status(200).json({
-            message:'Data fetched successfully!',
-            data: savedNotes[key]
-        });
+        for (var i=0;i<savedNotes[user].length;i++){
+            if(savedNotes[user][i].name === key) {
+                result.push(savedNotes[user][i]);
+            }
+        }
+
+        console.log("Get result " + result);
+       
+        if(result.length > 0) {
+            return res.status(200).json({
+                message:'Data fetched successfully!',
+                data: result
+            });
+        } else {
+            return res.status(200).json({
+                message:'not found'
+            });
+        }
     } else {
         return res.status(401).json({
             message: 'Bad request'
