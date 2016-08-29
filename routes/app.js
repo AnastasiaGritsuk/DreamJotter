@@ -9,16 +9,19 @@ router.get('/', function(req, res, next) {
     res.render('index');
 });
 
-router.get('/note', function(req, res, next) {
+router.get('/note/:key', function(req, res, next) {
     var token = req.headers.authorization;
     console.log(token);
-    var key = userMap[token];
+    var user = userMap[token];
+    var key = ???
     
-    if(key) {
+    if(user) {
         return res.status(200).json({
             message:'Data fetched successfully!',
             data: savedNotes[key]
         });
+    } else {
+        what the hell ?
     }
 });
 

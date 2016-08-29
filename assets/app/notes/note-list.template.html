@@ -2,7 +2,7 @@
 <hr>
 <div class="row">
 	<div class="col-md-12">
-		<article class="panel panel-default" *ngFor="let note of notes">
+		<article class="panel panel-default" *ngFor="let note of app.notes">
 			<div class="panel-body">
 				<span class="note-name text-primary">{{ note.name }}</span>
 				<span class="note-value"> {{ note.text }}</span>

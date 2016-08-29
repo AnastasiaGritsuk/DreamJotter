@@ -14,9 +14,8 @@ import { OnInit } from '@angular/core';
 
 export class NoteListComponent implements OnInit{
 	public childValue: string;
-	notes: Note[] = [];
 
-	constructor(private _app: AppModel) {}
+	constructor(public app: AppModel) {}
 
 	ngOnInit() {
 		//this._app.find('')
@@ -30,10 +29,10 @@ export class NoteListComponent implements OnInit{
     	let pos = str.indexOf(" ");
     	let note = {name:str.slice(0,pos), text:str.slice(pos+1) };
 
-    	this._app.save(note);
+    	this.app.save(note);
     }
 
     onFindClick(key) {
-		this._app.find(key);
+		this.app.find(key);
     }
 }

@@ -37,21 +37,22 @@ export class NoteService {
 			'Content-Type': 'application/json',
 			'Authorization': token
 		});
-		return this.http.post('http://localhost:3000/note', body, {headers: headers});
+		return this.http.post('/note', body, {headers: headers});
 	}
 
 	getNotes(key:string, token:string): Observable<any> {
 
 		let headers = new Headers({
-			'Content-Type': 'application/json',
-			'Authorization': token
+			'Authorization': token,
+			'Accept': 'application/json'
 		});
 
-		return this.http.get('http://localhost:3000/note', {headers:headers,search: key})
-			.map( (data: Response) => {
+		console.log('getNotes: begin');
+
+		return this.http.get(`/note/${key}`, {headers:headers}).map( (data: Response) => {
 				let extracted = data.json();
 				
-				return extracted;
+				return extracted.data;
 			});
 	}
 }
