@@ -36,9 +36,12 @@ export class AppModel {
 		console.log('save: begin');
 		
 		return this.svc.insertNote(note, this.securityToken)
-			.subscribe(() => {
-					console.log('save: end');
-				});
+			.subscribe(
+				error => {
+				console.error("401 error " + error);
+					//console.log('save: end');
+				}
+			);
 	}
 	
 	find(key:string) {

@@ -2,8 +2,10 @@ var express = require('express');
 var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
 var Note = require('../models/note');
+
 var registerUsers = require('./registerUsers');
-var savedNotes = require('./notesdb');
+var notesdb = require('./notesdb');
+var userMap = {};
 
 router.get('/', function(req, res, next) {
     res.render('index');
@@ -18,11 +20,11 @@ router.get('/note/:key', function(req, res, next) {
 
     console.log("Get key " + key);
     console.log("Get user " + user);
-    console.log("Get savedNotes " + savedNotes[user]);
+    console.log("Get notesdb " + notesdb[user]);
     if(user) {
-        for (var i=0;i<savedNotes[user].length;i++){
-            if(savedNotes[user][i].name === key) {
-                result.push(savedNotes[user][i]);
+        for (var i=0;i<notesdb[user].length;i++){
+            if(notesdb[user][i].name === key) {
+                result.push(notesdb[user][i]);
             }
         }
 
@@ -46,25 +48,25 @@ router.get('/note/:key', function(req, res, next) {
 });
 
 router.post('/note', function(req, res, next) {
-    
     var note = {};
     note.name = req.body.name;
     note.text = req.body.text;
 
     var token = req.headers.authorization;
-    var key = userMap[token];
-    if(key) {
-        if(!savedNotes[key]){
-            savedNotes[key] = [note];
+    var user = userMap[token];
+    if(user) {
+        if(!notesdb[user]){
+            notesdb[user] = [note];
         } else {
-            savedNotes[key].push(note);
-        }     
+            notesdb[user].push(note);
+        }
+        console.log('Note has been saved');
+
+        return res.status(200).send('Note has been saved');
     }
-
-    return res.status(200).json({
-        message:'Save data successfully!'
-    })
-
+    
+    console.log('User is not authorized');
+    return res.status(401).send('User is not authorized');
 });
 
 router.post('/auth', function(req, res, next) {
@@ -115,7 +117,5 @@ router.delete('/auth', function(req, res, next) {
     });
 
 });
-
-var userMap = {};
 
 module.exports = router;

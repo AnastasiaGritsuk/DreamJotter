@@ -25,6 +25,18 @@ gulp.task('build-copy', function () {
         .pipe(gulp.dest(appProd));
 });
 
+function print() {
+    return {
+        next:function (entry) {
+            console.log(entry.name);
+        }
+    };
+}
+
+gulp.task('print', function() {
+    return gulp.src(appDev + '**/*.ts').pipe(print());
+});
+
 gulp.task('vendor', function() {
 
     // Angular 2 Framework

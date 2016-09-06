@@ -35,12 +35,15 @@ export class NoteService {
 		let body = JSON.stringify(note);
 		let headers = new Headers({
 			'Content-Type': 'application/json',
-			'Authorization': token
+			'Authorization': '1111'
 		});
-		return this.http.post('/note', body, {headers: headers});
+		return this.http.post('/note', body, {headers: headers})
+			.map( (data:Response) => {
+				console.log(data.text());
+			});
 	}
 
-	getNotes(key:string, token:string): Observable<any> {
+	getNotes(key:string, token:string): Observable<Note[]> {
 
 		let headers = new Headers({
 			'Authorization': token,

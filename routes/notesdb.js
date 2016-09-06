@@ -1,6 +1,6 @@
-var notes = {
+var notesdb = {
     
 }
 
 
-module.exports = notes;
+module.exports = notesdb;
