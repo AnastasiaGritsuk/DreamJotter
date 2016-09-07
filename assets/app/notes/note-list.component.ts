@@ -12,23 +12,15 @@ import { OnInit } from '@angular/core';
 	directives: [NoteComponent]
 })
 
-export class NoteListComponent implements OnInit{
+export class NoteListComponent {
 	public childValue: string;
 
 	constructor(public app: AppModel) {}
 
-	ngOnInit() {
-		//this._app.find('')
-		//	.subscribe(
-		//		notes => this.notes = notes,
-		//		error => console.log(error)
-		//	);
-	}
-
 	onSaveClick(str) {
+		
     	let pos = str.indexOf(" ");
     	let note = {name:str.slice(0,pos), text:str.slice(pos+1) };
-
     	this.app.save(note);
     }
 
