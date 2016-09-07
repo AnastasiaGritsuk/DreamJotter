@@ -7,6 +7,18 @@ var registerUsers = require('./registerUsers');
 var notesdb = require('./notesdb');
 var userMap = {};
 
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var ObjectId = require('mongodb').ObjectID;
+
+var url = 'mongodb://localhost:27017/notesDb';
+
+MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected correctly to server.");
+    db.close();
+});
+
 router.get('/', function(req, res, next) {
     res.render('index');
 });
@@ -55,12 +67,31 @@ router.post('/note', function(req, res, next) {
 
     var token = req.headers.authorization;
     var user = userMap[token];
+
+    var insertDocument = function(db, callback) {
+        db.collection('notes').insertOne( {
+            user : [note]
+        }, function(err, result) {
+            assert.equal(err, null);
+            console.log("Inserted a document into the notes collection.");
+            callback();
+        });
+    };
+    
     if(user) {
         if(!notesdb[user]){
             notesdb[user] = [note];
         } else {
             notesdb[user].push(note);
         }
+
+        MongoClient.connect(url, function(err, db) {
+            assert.equal(null, err);
+            insertDocument(db, function() {
+                db.close();
+            });
+        });
+
         console.log('Note has been saved');
 
         return res.status(200).send('Note has been saved');
@@ -120,5 +151,9 @@ router.delete('/auth', function(req, res, next) {
     });
 
 });
+
+
+
+
 
 module.exports = router;
