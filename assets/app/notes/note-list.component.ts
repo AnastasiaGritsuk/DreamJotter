@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppModel } from "../app.model";
 
 @Component({
@@ -7,11 +7,15 @@ import { AppModel } from "../app.model";
 	templateUrl: 'note-list.template.html'
 })
 
-export class NoteListComponent {
+export class NoteListComponent implements OnInit{
 	public inputModel;
 	
 	constructor(public app: AppModel) {}
-	
+
+	ngOnInit() {
+		this.app.notes = [];
+	}
+
 	onSaveClick(str) {
     	let pos = str.indexOf(" ");
     	let note = {name:str.slice(0,pos), text:str.slice(pos+1) };
