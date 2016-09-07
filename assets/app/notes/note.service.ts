@@ -35,12 +35,9 @@ export class NoteService {
 		let body = JSON.stringify(note);
 		let headers = new Headers({
 			'Content-Type': 'application/json',
-			'Authorization': '1111'
+			'Authorization': token
 		});
-		return this.http.post('/note', body, {headers: headers})
-			.map( (data:Response) => {
-				console.log(data.text());
-			});
+		return this.http.post('/note', body, {headers: headers});
 	}
 
 	getNotes(key:string, token:string): Observable<Note[]> {
@@ -56,7 +53,7 @@ export class NoteService {
 		return this.http.get(url, {headers:headers})
 			.map( (data: Response) => {
 				let extracted = data.json();
-				
+
 				return extracted.data;
 			});
 	}

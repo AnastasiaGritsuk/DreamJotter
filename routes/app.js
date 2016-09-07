@@ -41,6 +41,7 @@ router.get('/note/:key', function(req, res, next) {
             });
         }
     } else {
+        console.log('User is not authorized');
         return res.status(401).json({
             message: 'Bad request'
         });
@@ -64,7 +65,7 @@ router.post('/note', function(req, res, next) {
 
         return res.status(200).send('Note has been saved');
     }
-    
+
     console.log('User is not authorized');
     return res.status(401).send('User is not authorized');
 });
@@ -112,7 +113,9 @@ router.delete('/auth', function(req, res, next) {
         });
     }
 
-    return res.status(500).json({
+    console.log('User is not authorized');
+
+    return res.status(401).json({
         message: 'User does not exist'
     });
 

@@ -37,10 +37,8 @@ export class AppModel {
 		
 		return this.svc.insertNote(note, this.securityToken)
 			.subscribe(
-				error => {
-				console.error("401 error " + error);
-					//console.log('save: end');
-				}
+				()=> console.log('save: end'),
+				error => console.log(error)
 			);
 	}
 	
