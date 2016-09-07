@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Note } from "./notes/note.model";
 import { NoteListComponent } from "./notes/note-list.component";
 import { LoginComponent } from "./login.component";
 import { AppModel } from "./app.model";

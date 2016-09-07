@@ -4,8 +4,7 @@ import { Note } from './notes/note.model';
 
 @Injectable()
 export class AppModel {
-	private securityToken: string;
-	private logged: boolean = false;
+	private securityToken: string = null;
 	public notes:Note[] = [];
 
 	constructor(private svc:NoteService){}
@@ -17,7 +16,6 @@ export class AppModel {
 			.subscribe(
 				token => {
 					this.securityToken = token;
-					this.logged = true;
 					console.log('login: end');
 			});
 	}
@@ -27,7 +25,7 @@ export class AppModel {
 		
 		return this.svc.logout(this.securityToken)
 			.subscribe(() => {
-					this.logged = false;
+					this.securityToken = null;
 					console.log('logout: end');
 				});
 	};
@@ -54,6 +52,6 @@ export class AppModel {
 	}
 
 	getLogged() {
-		return this.logged;
+		return this.securityToken !== null;
 	}
 }

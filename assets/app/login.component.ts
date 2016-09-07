@@ -11,7 +11,6 @@ export class LoginComponent {
 	constructor(private _app: AppModel) {}
 
 	newUser = {username:'', password:''};
-	logged: boolean = false;
 
 	onSubmit() {
 		this._app.login(this.newUser.username, this.newUser.password);
