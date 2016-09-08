@@ -1,28 +1,8 @@
 var express = require('express');
 var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
-var Note = require('../models/note');
-
-var mongoose = require('mongoose');
-mongoose.connect('localhost:27017/jotterDB');
-var Schema = mongoose.Schema;
-
-var userNoteSchema = new Schema({
-    name: String,
-    text: String,
-    user: String
-}, {collection: 'notes'});
-
-var UserNote = mongoose.model('UserNote', userNoteSchema);
-
-
-var userSchema = new Schema ({
-    username: String,
-    password: String,
-    securityToken: String
-}, {collection: 'users'});
-
-var User = mongoose.model('User', userSchema)
+var UserNote = require('../models/note');
+var User = require('../models/user');
 
 router.get('/', function(req, res, next) {
     res.render('index');
