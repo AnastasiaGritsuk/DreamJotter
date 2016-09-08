@@ -16,6 +16,7 @@ export class AppModel {
 			.subscribe(
 				token => {
 					this.securityToken = token;
+					console.log('TOKEN ' + token);
 					console.log('login: end');
 			});
 	}

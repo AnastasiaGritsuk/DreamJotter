@@ -8,15 +8,25 @@ var notesdb = require('./notesdb');
 var userMap = {};
 
 var mongoose = require('mongoose');
-mongoose.connect('localhost:27017/notesDb');
+mongoose.connect('localhost:27017/jotterDB');
 var Schema = mongoose.Schema;
 
 var userNoteSchema = new Schema({
     name: String,
-    text: String
+    text: String,
+    user: String
 }, {collection: 'notes'});
 
 var UserNote = mongoose.model('UserNote', userNoteSchema);
+
+
+var userSchema = new Schema ({
+    username: String,
+    password: String,
+    securityToken: String
+}, {collection: 'users'});
+
+var User = mongoose.model('User', userSchema)
 
 router.get('/', function(req, res, next) {
     res.render('index');
@@ -34,7 +44,7 @@ router.get('/note/:key', function(req, res, next) {
     console.log("Get notesdb " + notesdb[user]);
 
     if(user) {
-        UserNote.find()
+        User.find()
             .then(function (doc) {
                 console.log(doc);
             });
@@ -71,10 +81,20 @@ router.post('/note', function(req, res, next) {
 
     var token = req.headers.authorization;
     var user = userMap[token];
-    var userNote = new UserNote(note);
-    userNote.save();
+    var newUser = new User(
+        {
+            username: '3user',
+            password: '1234',
+            securityToken: null
+        });
 
-    
+    // newUser.save(function (err, doc) {
+    //     if(!err){
+    //         console.log('record was inserted');
+    //     }
+    // });
+
+
     if(user) {
         if(!notesdb[user]){
             notesdb[user] = [note];
@@ -109,19 +129,32 @@ router.post('/auth', function(req, res, next) {
     var creds = basicAuthParser(req.headers.authorization);
     var username = creds.username;
     var password = creds.password;
-    
-    if(registerUsers[username] === password) {
-        userMap[guid] = username;
-        return res.status(200).json({
-            message:'User is logged',
-            userToken: guid
+
+    User.findOne({username: username}, function (err, doc) {
+        if(err) {
+            throw  err;
+        }
+        if(doc) {
+            if(doc.password === password) {
+                doc.securityToken = guid;
+                console.log('queried ' + doc);
+                doc.save();
+
+                return res.status(200).json({
+                    message: 'User is logged',
+                    userToken: guid
+                });
+            } else {
+                return res.status(401).json({
+                    message: 'User does not exist'
+                });
+            }
+        }
+
+        return res.status(500).json({
+            message: 'User does not exist'
         });
-    } 
-    
-    return res.status(500).json({
-        message: 'User does not exist'
     });
-    
 });
 
 router.delete('/auth', function(req, res, next) {
