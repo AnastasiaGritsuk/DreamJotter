@@ -44,10 +44,9 @@ router.get('/note/:key', function(req, res, next) {
     console.log("Get notesdb " + notesdb[user]);
 
     if(user) {
-        User.find()
-            .then(function (doc) {
-                console.log(doc);
-            });
+        UserNote.find(function (err, doc) {
+            console.log(doc);
+        });
         for (var i=0;i<notesdb[user].length;i++){
             if(notesdb[user][i].name === key) {
                 result.push(notesdb[user][i]);
@@ -80,35 +79,22 @@ router.post('/note', function(req, res, next) {
     note.text = req.body.text;
 
     var token = req.headers.authorization;
-    var user = userMap[token];
-    var newUser = new User(
-        {
-            username: '3user',
-            password: '1234',
-            securityToken: null
-        });
 
-    // newUser.save(function (err, doc) {
-    //     if(!err){
-    //         console.log('record was inserted');
-    //     }
-    // });
-
-
-    if(user) {
-        if(!notesdb[user]){
-            notesdb[user] = [note];
-        } else {
-            notesdb[user].push(note);
+    User.findOne({securityToken: token}, function (err, doc) {
+        if(err) {
+            throw  err;
+        }
+        if(doc) {
+            note.user = doc.username;
+            var userNote = new UserNote(note);
+            userNote.save();
+            return res.status(200).send('Note has been saved');
         }
 
-        console.log('Note has been saved');
-
-        return res.status(200).send('Note has been saved');
-    }
-
-    console.log('User is not authorized');
-    return res.status(401).send('User is not authorized');
+        return res.status(401).json({
+            message: 'User does not exist'
+        });
+    });
 });
 
 router.post('/auth', function(req, res, next) {
