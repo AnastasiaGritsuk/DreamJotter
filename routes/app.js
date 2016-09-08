@@ -159,20 +159,22 @@ router.post('/auth', function(req, res, next) {
 
 router.delete('/auth', function(req, res, next) {
     var token = req.headers.authorization;
-    if(userMap[token]) {
-        delete userMap[token];
 
-        return res.status(200).json({
-            message:'User logout successfully!'
+    User.findOne({securityToken: token}, function (err, doc) {
+        if(err) {
+            throw  err;
+        }
+        if(doc) {
+            doc.securityToken = null;
+            return res.status(200).json({
+                message:'User logout successfully!'
+            });
+        }
+
+        return res.status(401).json({
+            message: 'User does not exist'
         });
-    }
-
-    console.log('User is not authorized');
-
-    return res.status(401).json({
-        message: 'User does not exist'
     });
-
 });
 
 
