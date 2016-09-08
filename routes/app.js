@@ -7,17 +7,16 @@ var registerUsers = require('./registerUsers');
 var notesdb = require('./notesdb');
 var userMap = {};
 
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
-var ObjectId = require('mongodb').ObjectID;
+var mongoose = require('mongoose');
+mongoose.connect('localhost:27017/notesDb');
+var Schema = mongoose.Schema;
 
-var url = 'mongodb://localhost:27017/notesDb';
+var userNoteSchema = new Schema({
+    name: String,
+    text: String
+}, {collection: 'notes'});
 
-MongoClient.connect(url, function(err, db) {
-    assert.equal(null, err);
-    console.log("Connected correctly to server.");
-    db.close();
-});
+var UserNote = mongoose.model('UserNote', userNoteSchema);
 
 router.get('/', function(req, res, next) {
     res.render('index');
@@ -33,7 +32,12 @@ router.get('/note/:key', function(req, res, next) {
     console.log("Get key " + key);
     console.log("Get user " + user);
     console.log("Get notesdb " + notesdb[user]);
+
     if(user) {
+        UserNote.find()
+            .then(function (doc) {
+                console.log(doc);
+            });
         for (var i=0;i<notesdb[user].length;i++){
             if(notesdb[user][i].name === key) {
                 result.push(notesdb[user][i]);
@@ -67,16 +71,9 @@ router.post('/note', function(req, res, next) {
 
     var token = req.headers.authorization;
     var user = userMap[token];
+    var userNote = new UserNote(note);
+    userNote.save();
 
-    var insertDocument = function(db, callback) {
-        db.collection('notes').insertOne( {
-            user : [note]
-        }, function(err, result) {
-            assert.equal(err, null);
-            console.log("Inserted a document into the notes collection.");
-            callback();
-        });
-    };
     
     if(user) {
         if(!notesdb[user]){
@@ -84,13 +81,6 @@ router.post('/note', function(req, res, next) {
         } else {
             notesdb[user].push(note);
         }
-
-        MongoClient.connect(url, function(err, db) {
-            assert.equal(null, err);
-            insertDocument(db, function() {
-                db.close();
-            });
-        });
 
         console.log('Note has been saved');
 
@@ -151,9 +141,6 @@ router.delete('/auth', function(req, res, next) {
     });
 
 });
-
-
-
 
 
 module.exports = router;
