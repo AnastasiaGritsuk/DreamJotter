@@ -46,6 +46,7 @@ export class AppModel {
 		
 		return this.svc.getNotes(key, this.securityToken)
 			.subscribe((notes) => {
+				console.log('NOTES ' + notes);
 				this.notes = notes;
 				
 				console.log('find: end');

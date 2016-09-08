@@ -3,10 +3,6 @@ var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
 var Note = require('../models/note');
 
-var registerUsers = require('./registerUsers');
-var notesdb = require('./notesdb');
-var userMap = {};
-
 var mongoose = require('mongoose');
 mongoose.connect('localhost:27017/jotterDB');
 var Schema = mongoose.Schema;
@@ -35,42 +31,35 @@ router.get('/', function(req, res, next) {
 router.get('/note/:key', function(req, res, next) {
     var token = req.headers.authorization;
     console.log("Get token " + token);
-    var user = userMap[token];
     var key = req.params.key;
     var result = [];
-
-    console.log("Get key " + key);
-    console.log("Get user " + user);
-    console.log("Get notesdb " + notesdb[user]);
-
-    if(user) {
-        UserNote.find(function (err, doc) {
-            console.log(doc);
-        });
-        for (var i=0;i<notesdb[user].length;i++){
-            if(notesdb[user][i].name === key) {
-                result.push(notesdb[user][i]);
-            }
+    
+    User.findOne({securityToken: token}, function (err, doc) {
+        if(err) {
+            throw  err;
         }
 
-        console.log("Get result " + result);
-       
-        if(result.length > 0) {
-            return res.status(200).json({
-                message:'Data fetched successfully!',
-                data: result
+        if(doc) {
+            var user = doc.username;
+
+            UserNote.find({user: user, name: key}, function (err, doc) {
+                doc.forEach(function (note) {
+                    result.push(note);
+                })
+                console.log('RESULT ' + result);
+                return res.status(200).json({
+                    message:'Data fetched successfully!',
+                    data: result
+                });
             });
-        } else {
-            return res.status(200).json({
-                message:'not found'
+            
+        }else {
+            console.log('User is not authorized');
+            return res.status(401).json({
+                message: 'Bad request'
             });
         }
-    } else {
-        console.log('User is not authorized');
-        return res.status(401).json({
-            message: 'Bad request'
-        });
-    }
+    });
 });
 
 router.post('/note', function(req, res, next) {

@@ -52,8 +52,9 @@ export class NoteService {
 		var url = `/note/${key}`;
 		return this.http.get(url, {headers:headers})
 			.map( (data: Response) => {
+				console.log('data ' + data);
 				let extracted = data.json();
-
+				console.log('data ext ' + extracted.data);
 				return extracted.data;
 			});
 	}
