@@ -3,6 +3,7 @@ var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
 var UserNote = require('../models/note');
 var User = require('../models/user');
+var Guid = require('guid');
 
 router.get('/', function(req, res, next) {
     res.render('index');
@@ -10,7 +11,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/note/:key', function(req, res, next) {
     var token = req.headers.authorization;
-    console.log("Get token " + token);
     var key = req.params.key;
     var result = [];
     
@@ -46,7 +46,6 @@ router.post('/note', function(req, res, next) {
     var note = {};
     note.name = req.body.name;
     note.text = req.body.text;
-
     var token = req.headers.authorization;
 
     User.findOne({securityToken: token}, function (err, doc) {
@@ -67,20 +66,7 @@ router.post('/note', function(req, res, next) {
 });
 
 router.post('/auth', function(req, res, next) {
-    var guid = (function() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return function() {
-            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                s4() + '-' + s4() + s4() + s4();
-        };
-    })();
-
-    var guid = guid();
-
+    var token = Guid.create();
     var creds = basicAuthParser(req.headers.authorization);
     var username = creds.username;
     var password = creds.password;
@@ -91,13 +77,13 @@ router.post('/auth', function(req, res, next) {
         }
         if(doc) {
             if(doc.password === password) {
-                doc.securityToken = guid;
+                doc.securityToken = token;
                 console.log('queried ' + doc);
                 doc.save();
 
                 return res.status(200).json({
                     message: 'User is logged',
-                    userToken: guid
+                    userToken: token
                 });
             } else {
                 return res.status(401).json({
