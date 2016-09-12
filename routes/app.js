@@ -80,7 +80,7 @@ router.post('/auth', function(req, res, next) {
                         doc.save();
 
                         return res.status(200).json({
-                            userToken: token
+                            data: token
                         });
                     }
                 }
@@ -101,7 +101,7 @@ router.post('/auth', function(req, res, next) {
         user.save();
 
         return res.status(200).json({
-            userToken: token
+            data: token
         });
     }
 });

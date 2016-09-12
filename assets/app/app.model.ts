@@ -14,13 +14,11 @@ export class AppModel {
 		
 		return this.svc.login(user, pwd)
 			.subscribe(
-				res => {
-					this.securityToken = res.userToken;
+				token => {
+					this.securityToken = token;
 					console.log('login: end');
 				},
-				err => {
-					console.log(err);
-				}
+				err => console.log(err)
 			);
 	}
 
@@ -28,10 +26,13 @@ export class AppModel {
 		console.log('logout: begin');
 		
 		return this.svc.logout(this.securityToken)
-			.subscribe(() => {
+			.subscribe(
+				() => {
 					this.securityToken = null;
 					console.log('logout: end');
-				});
+				},
+				err => console.log(err)
+			);
 	};
 
 	save(note:Note) {
@@ -53,9 +54,7 @@ export class AppModel {
 					this.notes = notes;
 					console.log('find: end');
 				},
-				err => {
-					console.log(err);
-				}
+				err => console.log(err)
 			);
 	}
 

@@ -48,10 +48,7 @@ export class NoteService {
 		
 		var url = `/note/${key}`;
 		return this.http.get(url, {headers:headers})
-			.map( (res: Response) => {
-				let extracted = res.json();
-				return extracted.data;
-			})
+			.map(this.extractData)
 			.catch(this.handleError);
 	}
 
@@ -63,7 +60,8 @@ export class NoteService {
 	}
 
 	private extractData(res: Response) {
-		return res.json() || { };
+		let body = res.json();
+		return body.data || { };
 	}
 
 }
