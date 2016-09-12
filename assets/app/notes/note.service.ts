@@ -16,12 +16,8 @@ export class NoteService {
 		});
 
 		return this.http.post('http://localhost:3000/auth', '', {headers: headers})
-			.map ( (data: Response) => {
-				let extracted = data.json();
-
-				return extracted;
-			})
-			//.catch( data: Response) => Observable.throw(data.json()));
+			.map(this.extractData)
+			.catch(this.handleError);
 	}
 
 	logout(token:string) {
@@ -59,4 +55,17 @@ export class NoteService {
 				return extracted.data;
 			});
 	}
+
+	private handleError(error:any) {
+		let errMsg = (error.message) ? error.message :
+			error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+		console.error(errMsg); // log to console instead
+		return Observable.throw(errMsg);
+	}
+
+	private extractData(res: Response) {
+		let body = res.json();
+		return body.userToken || { };
+	}
+
 }

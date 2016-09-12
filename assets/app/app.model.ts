@@ -15,8 +15,7 @@ export class AppModel {
 		return this.svc.login(user, pwd)
 			.subscribe(
 				res => {
-					this.securityToken = res.userToken;
-					console.log(res.message);
+					this.securityToken = res;
 					console.log('login: end');
 				},
 				err => {
