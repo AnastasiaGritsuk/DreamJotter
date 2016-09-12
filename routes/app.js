@@ -15,30 +15,25 @@ router.get('/note/:key', function(req, res, next) {
     var result = [];
     
     User.findOne({securityToken: token}, function (err, doc) {
-        if(err) {
-            throw  err;
-        }
-
+        if(err) throw  err;
         if(doc) {
             var user = doc.username;
 
             UserNote.find({user: user, name: key}, function (err, doc) {
-                doc.forEach(function (note) {
-                    result.push(note);
-                })
-                console.log('RESULT ' + result);
-                return res.status(200).json({
-                    message:'Data fetched successfully!',
-                    data: result
-                });
-            });
-            
-        }else {
-            console.log('User is not authorized');
-            return res.status(401).json({
-                message: 'Bad request'
+                if(err) throw  err;
+                if(doc) {
+                    doc.forEach(function (note) {
+                        result.push(note);
+                    });
+
+                    return res.status(200).json({
+                        data: result
+                    });
+                }
+                return res.status(400).send('Bad request');
             });
         }
+        return res.status(401).send('Unauthorized');
     });
 });
 
@@ -56,12 +51,10 @@ router.post('/note', function(req, res, next) {
             note.user = doc.username;
             var userNote = new UserNote(note);
             userNote.save();
+
             return res.status(200).send('Note has been saved');
         }
-
-        return res.status(401).json({
-            message: 'User does not exist'
-        });
+        return res.status(401).send('Unauthorized');
     });
 });
 
@@ -90,7 +83,6 @@ router.post('/auth', function(req, res, next) {
                         });
                     }
                 }
-
                 return res.status(401).send('Unauthorized');
             });
         }
@@ -103,7 +95,7 @@ router.post('/auth', function(req, res, next) {
             username:  username,
             password: password,
             securityToken: token
-        }
+        };
         var user = new User(newuser);
         user.save();
 
@@ -117,21 +109,13 @@ router.delete('/auth', function(req, res, next) {
     var token = req.headers.authorization;
 
     User.findOne({securityToken: token}, function (err, doc) {
-        if(err) {
-            throw  err;
-        }
+        if(err) throw  err;
         if(doc) {
             doc.securityToken = null;
-            return res.status(200).json({
-                message:'User logout successfully!'
-            });
+            return res.status(200).send('Logout successful');
         }
-
-        return res.status(401).json({
-            message: 'User does not exist'
-        });
+        return res.status(401).send('Unauthorized');
     });
 });
-
 
 module.exports = router;
