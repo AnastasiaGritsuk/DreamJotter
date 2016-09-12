@@ -71,31 +71,54 @@ router.post('/auth', function(req, res, next) {
     var username = creds.username;
     var password = creds.password;
 
-    User.findOne({username: username}, function (err, doc) {
-        if(err) {
-            throw  err;
-        }
-        if(doc) {
-            if(doc.password === password) {
-                doc.securityToken = token;
-                console.log('queried ' + doc);
-                doc.save();
+    User.count(function (err, count) {
+        if (!err && count === 0) {
+            populateDB();
+        }else {
+            User.findOne({username: username}, function (err, doc) {
+                if(err) {
+                    throw  err;
+                }
+                if(doc) {
+                    if(doc.password === password) {
+                        doc.securityToken = token;
+                        console.log('queried ' + doc);
+                        doc.save();
 
-                return res.status(200).json({
-                    message: 'User is logged',
-                    userToken: token
-                });
-            } else {
-                return res.status(401).json({
+                        return res.status(200).json({
+                            message: 'User is logged',
+                            userToken: token
+                        });
+                    } else {
+                        return res.status(401).json({
+                            message: 'User does not exist'
+                        });
+                    }
+                }
+
+                return res.status(500).json({
                     message: 'User does not exist'
                 });
-            }
+            });
         }
-
-        return res.status(500).json({
-            message: 'User does not exist'
-        });
     });
+    
+    function populateDB() {
+        console.log('population starts');
+
+        var newuser = {
+            username:  username,
+            password: password,
+            securityToken: token
+        }
+        var user = new User(newuser);
+        user.save();
+
+        return res.status(200).json({
+            message:'default user created',
+            userToken: token
+        });
+    }
 });
 
 router.delete('/auth', function(req, res, next) {
