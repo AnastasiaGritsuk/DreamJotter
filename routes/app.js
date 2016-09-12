@@ -32,8 +32,9 @@ router.get('/note/:key', function(req, res, next) {
                 }
                 return res.status(400).send('Bad request');
             });
+        } else {
+            return res.status(401).send('Unauthorized');
         }
-        return res.status(401).send('Unauthorized');
     });
 });
 

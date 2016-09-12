@@ -15,7 +15,7 @@ export class AppModel {
 		return this.svc.login(user, pwd)
 			.subscribe(
 				res => {
-					this.securityToken = res;
+					this.securityToken = res.userToken;
 					console.log('login: end');
 				},
 				err => {
@@ -48,12 +48,15 @@ export class AppModel {
 		console.log('find: begin');
 		
 		return this.svc.getNotes(key, this.securityToken)
-			.subscribe((notes) => {
-				console.log('NOTES ' + notes);
-				this.notes = notes;
-				
-				console.log('find: end');
-			});
+			.subscribe(
+				notes => {
+					this.notes = notes;
+					console.log('find: end');
+				},
+				err => {
+					console.log(err);
+				}
+			);
 	}
 
 	getLogged() {
