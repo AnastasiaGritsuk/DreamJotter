@@ -18,7 +18,8 @@
 			<div class="login-service">
 				<button type="submit" class="btn btn-primary">Login</button>
 			</div>
-		</form>	
+			<div *ngIf="_app.errStatus === '401' " class="alert alert-danger" role="alert">Incorrect login or password</div>
+		</form>
 		<div class="panel panel-default" *ngIf="_app.getLogged()">
 			<div class="panel-heading"> 
 				{{ newUser.username }}

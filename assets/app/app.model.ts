@@ -6,7 +6,8 @@ import { Note } from './notes/note.model';
 export class AppModel {
 	private securityToken: string = null;
 	public notes:Note[] = [];
-
+	public errStatus: string = null;
+	
 	constructor(private svc:NoteService){}
 
 	login(user:string, pwd:string) {
@@ -18,7 +19,7 @@ export class AppModel {
 					this.securityToken = token;
 					console.log('login: end');
 				},
-				err => console.log(err)
+				err => this.errStatus = err
 			);
 	}
 
@@ -29,9 +30,10 @@ export class AppModel {
 			.subscribe(
 				() => {
 					this.securityToken = null;
+					this.errStatus = null;
 					console.log('logout: end');
 				},
-				err => console.log(err)
+				err => this.errStatus = err
 			);
 	};
 
@@ -41,7 +43,7 @@ export class AppModel {
 		return this.svc.insertNote(note, this.securityToken)
 			.subscribe(
 				()=> console.log('save: end'),
-				error => console.log(error)
+				err => this.errStatus = err
 			);
 	}
 	
@@ -51,10 +53,11 @@ export class AppModel {
 		return this.svc.getNotes(key, this.securityToken)
 			.subscribe(
 				notes => {
+					this.errStatus = null;
 					this.notes = notes;
 					console.log('find: end');
 				},
-				err => console.log(err)
+				err => this.errStatus = err
 			);
 	}
 

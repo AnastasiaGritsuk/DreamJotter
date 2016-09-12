@@ -21,7 +21,8 @@ router.get('/note/:key', function(req, res, next) {
 
             UserNote.find({user: user, name: key}, function (err, doc) {
                 if(err) throw  err;
-                if(doc) {
+                console.log('DOC ' + doc.length);
+                if(doc.length !== 0) {
                     doc.forEach(function (note) {
                         result.push(note);
                     });
@@ -30,7 +31,7 @@ router.get('/note/:key', function(req, res, next) {
                         data: result
                     });
                 }
-                return res.status(400).send('Bad request');
+                return res.status(404).send('Not found');
             });
         } else {
             return res.status(401).send('Unauthorized');
