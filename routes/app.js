@@ -77,6 +77,7 @@ router.post('/auth', function(req, res, next) {
         }else {
             User.findOne({username: username}, function (err, doc) {
                 if(err) {
+                    console.log('unhandled error');
                     throw  err;
                 }
                 if(doc) {

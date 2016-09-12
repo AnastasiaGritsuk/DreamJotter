@@ -9,7 +9,7 @@ import { Note } from "./note.model";
 export class NoteService {
 	constructor (private http: Http) {};
 
-	login(user:string, pwd:string):Observable<string> {
+	login(user:string, pwd:string):Observable<any> {
 		let headers = new Headers({
 			'Content-Type': 'application/json',
 			'Authorization' : 'Basic '+ btoa(user+':'+pwd)
@@ -19,8 +19,9 @@ export class NoteService {
 			.map ( (data: Response) => {
 				let extracted = data.json();
 
-				return extracted.userToken;
-			});
+				return extracted;
+			})
+			//.catch( data: Response) => Observable.throw(data.json()));
 	}
 
 	logout(token:string) {

@@ -14,11 +14,15 @@ export class AppModel {
 		
 		return this.svc.login(user, pwd)
 			.subscribe(
-				token => {
-					this.securityToken = token;
-					console.log('TOKEN ' + token);
+				res => {
+					this.securityToken = res.userToken;
+					console.log(res.message);
 					console.log('login: end');
-			});
+				},
+				err => {
+					console.log(err);
+				}
+			);
 	}
 
 	logout() {
