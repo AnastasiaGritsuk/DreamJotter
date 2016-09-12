@@ -83,23 +83,15 @@ router.post('/auth', function(req, res, next) {
                 if(doc) {
                     if(doc.password === password) {
                         doc.securityToken = token;
-                        console.log('queried ' + doc);
                         doc.save();
 
                         return res.status(200).json({
-                            message: 'User is logged',
                             userToken: token
-                        });
-                    } else {
-                        return res.status(401).json({
-                            message: 'User does not exist'
                         });
                     }
                 }
 
-                return res.status(500).json({
-                    message: 'User does not exist'
-                });
+                return res.status(401).send('Unauthorized');
             });
         }
     });
@@ -116,7 +108,6 @@ router.post('/auth', function(req, res, next) {
         user.save();
 
         return res.status(200).json({
-            message:'default user created',
             userToken: token
         });
     }
