@@ -15,7 +15,7 @@ export class NoteService {
 			'Authorization' : 'Basic '+ btoa(user+':'+pwd)
 		});
 
-		return this.http.post('http://localhost:3000/auth', '', {headers: headers})
+		return this.http.post('/auth', '', {headers: headers})
 			.map(this.extractData)
 			.catch(this.handleError);
 	}
@@ -25,7 +25,7 @@ export class NoteService {
 			'Authorization': token
 		});
 
-		return this.http.delete('http://localhost:3000/auth', {headers: headers})
+		return this.http.delete('/auth', {headers: headers})
 	}
 
 	insertNote(note: Note, token:string): Observable<any> {
