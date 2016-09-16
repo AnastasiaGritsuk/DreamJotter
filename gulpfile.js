@@ -64,9 +64,37 @@ gulp.task('vendor', function() {
         .pipe(gulp.dest(vendor + '/zone.js/'));
 });
 
+gulp.task('dist', function () {
+    gulp.src('public/**/*')
+        .pipe(gulp.dest('dist/public'));
+
+    gulp.src('assets/**/*')
+        .pipe(gulp.dest('dist/assets'));
+
+    gulp.src('bin/**/*')
+        .pipe(gulp.dest('dist/bin'));
+
+    gulp.src('models/**/*')
+        .pipe(gulp.dest('dist/models'));
+
+    gulp.src('routes/**/*')
+        .pipe(gulp.dest('dist/routes'));
+
+    gulp.src('views/**/*')
+        .pipe(gulp.dest('dist/views'));
+
+    gulp.src('*.json')
+        .pipe(gulp.dest('dist'));
+    
+    return gulp.src('app.js')
+        .pipe(gulp.dest('dist'));
+
+});
+
 gulp.task('watch', function () {
     gulp.watch(appDev + '**/*.ts', ['build-ts']);
     gulp.watch(appDev + '**/*.{html,htm,css}', ['build-copy']);
 });
 
 gulp.task('default', ['build-ts', 'build-copy']);
+
