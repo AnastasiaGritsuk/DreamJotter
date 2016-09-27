@@ -5,6 +5,8 @@ var UserNote = require('../models/note');
 var User = require('../models/user');
 var Guid = require('guid');
 
+var userMap = {}
+
 router.get('/', function(req, res, next) {
     res.render('index');
 });
@@ -26,7 +28,8 @@ router.post('/auth', function(req, res, next) {
                 }
                 if(doc) {
                     if(doc.password === password) {
-                        doc.securityToken = token;
+                        //doc.securityToken = token;
+                        userMap[token] = username;
                         doc.save();
 
                         return res.status(200).json({
@@ -59,14 +62,9 @@ router.post('/auth', function(req, res, next) {
 router.delete('/auth', function(req, res, next) {
     var token = req.headers.authorization;
 
-    User.findOne({securityToken: token}, function (err, doc) {
-        if(err) throw  err;
-        if(doc) {
-            doc.securityToken = null;
-            return res.status(200).send('Logout successful');
-        }
-        return res.status(401).send('Unauthorized');
-    });
+    if(userMap[token])
+        return res.status(200).send('Logout successful');
+    return res.status(401).send('Unauthorized');
 });
 
 
@@ -74,29 +72,24 @@ router.get('/note/:key', function(req, res, next) {
     var token = req.headers.authorization;
     var key = req.params.key;
     var result = [];
-    
-    User.findOne({securityToken: token}, function (err, doc) {
-        if(err) throw  err;
-        if(doc) {
-            var user = doc.username;
+    var user = userMap[token];
 
-            UserNote.find({user: user, name: key}, function (err, doc) {
-                if(err) throw  err;
-                if(doc.length !== 0) {
-                    doc.forEach(function (note) {
-                        result.push(note);
-                    });
+    if(user) {
+        UserNote.find({user: user, name: key}, function (err, doc) {
+            if(err) throw  err;
+            if(doc.length !== 0) {
+                doc.forEach(function (note) {
+                    result.push(note);
+                });
 
-                    return res.status(200).json({
-                        data: result
-                    });
-                }
-                return res.status(404).send('Not found');
-            });
-        } else {
-            return res.status(401).send('Unauthorized');
-        }
-    });
+                return res.status(200).json({
+                    data: result
+                });
+            }
+            return res.status(404).send('Not found');
+        });
+    } else
+        return res.status(401).send('Unauthorized');
 });
 
 router.post('/note', function(req, res, next) {
@@ -104,21 +97,18 @@ router.post('/note', function(req, res, next) {
     var note = {};
     note.name = req.body.name;
     note.text = req.body.text;
+    
+    var user = userMap[token];
 
-    User.findOne({securityToken: token}, function (err, doc) {
-        if(err) {
-            throw  err;
-        }
-        if(doc) {
-            note.user = doc.username;
-            var userNote = new UserNote(note);
-            userNote.save();
+    if(user) {
+        note.user = user;
+        var userNote = new UserNote(note);
+        userNote.save();
 
-            return res.status(200).send('Note has been saved');
-        }
-        return res.status(401).send('Unauthorized');
-    });
+        return res.status(200).send('Note has been saved');
+    }
+
+    return res.status(401).send('Unauthorized');
 });
-
 
 module.exports = router;
