@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var run = require('gulp-run');
 
 var appDev = 'assets/app/';
 var appProd = 'public/js/app/';
@@ -97,4 +98,11 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', ['build-ts', 'build-copy']);
+
+gulp.task('hello-world', function() {
+    return gulp.src('../mongo/bin')
+        .pipe(run('mongod').exec())
+        .pipe(gulp.dest('output'));   // writes "Hello World\n" to output/echo.
+
+})
 
