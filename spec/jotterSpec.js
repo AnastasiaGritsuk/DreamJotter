@@ -22,5 +22,21 @@ describe("Jotter Server", function() {
                 done();
             });
         });
+        it("user login with valid username and invalid password ", function(done) {
+            var creds = new Buffer('admin' + ':' + 'zzz').toString('base64');
+            var headers = {
+                'Content-Type': 'application/json',
+                'Authorization' : 'Basic ' + creds
+            };
+
+            request.post({
+                headers: headers,
+                url: base_url + '/auth',
+                body: ''
+            }, function(error, response, body) {
+                expect(response.statusCode).toBe(401);
+                done();
+            });
+        });
     });
 });
