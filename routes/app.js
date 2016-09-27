@@ -100,10 +100,10 @@ router.get('/note/:key', function(req, res, next) {
 });
 
 router.post('/note', function(req, res, next) {
+    var token = req.headers.authorization;
     var note = {};
     note.name = req.body.name;
     note.text = req.body.text;
-    var token = req.headers.authorization;
 
     User.findOne({securityToken: token}, function (err, doc) {
         if(err) {
