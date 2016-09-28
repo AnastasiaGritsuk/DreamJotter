@@ -6,5 +6,4 @@ function btoa(str) {
 
 module.exports = {
     btoa:btoa
-
 }
