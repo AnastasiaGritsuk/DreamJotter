@@ -2,19 +2,25 @@ var request = require("request");
 
 var base_url = "http://localhost:3000";
 
+function btoa(str) {
+    if (Buffer.byteLength(str) !== str.length)
+        throw new Error('bad string!');
+    return Buffer(str, 'binary').toString('base64');
+}
+
+function loginHeaders(username, pwd) {
+    return {
+        'Content-Type': 'application/json',
+        'Authorization' : 'Basic ' + btoa(username + ':' + pwd)
+    }
+}
+
 describe("Jotter Server", function() {
 
     describe("POST /auth", function() {
-
-        it("user login with valid username and valid password ", function(done) {
-            var creds = new Buffer('admin' + ':' + '1234').toString('base64');
-            var headers = {
-                'Content-Type': 'application/json',
-                'Authorization' : 'Basic ' + creds
-            };
-
+        it("user login with valid username and valid password", function(done) {
             request.post({
-                headers: headers,
+                headers: loginHeaders('admin','1234'),
                 url: base_url + '/auth',
                 body: ''
             }, function(error, response, body) {
@@ -23,14 +29,8 @@ describe("Jotter Server", function() {
             });
         });
         it("user login with valid username and invalid password ", function(done) {
-            var creds = new Buffer('admin' + ':' + 'zzz').toString('base64');
-            var headers = {
-                'Content-Type': 'application/json',
-                'Authorization' : 'Basic ' + creds
-            };
-
             request.post({
-                headers: headers,
+                headers: loginHeaders('admin','zzzz'),
                 url: base_url + '/auth',
                 body: ''
             }, function(error, response, body) {
@@ -38,31 +38,9 @@ describe("Jotter Server", function() {
                 done();
             });
         });
-        it("user login with invalid username and invalid password ", function(done) {
-            var creds = new Buffer('zzz' + ':' + 'zzz').toString('base64');
-            var headers = {
-                'Content-Type': 'application/json',
-                'Authorization' : 'Basic ' + creds
-            };
-
+        it("user login with invalid username", function(done) {
             request.post({
-                headers: headers,
-                url: base_url + '/auth',
-                body: ''
-            }, function(error, response, body) {
-                expect(response.statusCode).toBe(401);
-                done();
-            });
-        });
-        it("user login with invalid username and valid password ", function(done) {
-            var creds = new Buffer('zzz' + ':' + '1234').toString('base64');
-            var headers = {
-                'Content-Type': 'application/json',
-                'Authorization' : 'Basic ' + creds
-            };
-
-            request.post({
-                headers: headers,
+                headers: loginHeaders('zzzz','1234'),
                 url: base_url + '/auth',
                 body: ''
             }, function(error, response, body) {
