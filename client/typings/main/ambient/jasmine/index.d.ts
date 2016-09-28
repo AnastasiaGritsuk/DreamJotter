@@ -19,7 +19,7 @@ declare function fit(expectation: string, assertion?: (done: DoneFn) => void, ti
 declare function xit(expectation: string, assertion?: () => void, timeout?: number): void;
 declare function xit(expectation: string, assertion?: (done: DoneFn) => void, timeout?: number): void;
 
-/** If you call the function pending anywhere in the spec body, no matter the expectations, the spec will be marked pending. */
+/** If you call the function pending anywhere in the tests body, no matter the expectations, the tests will be marked pending. */
 declare function pending(reason?: string): void;
 
 declare function beforeEach(action: () => void, timeout?: number): void;
