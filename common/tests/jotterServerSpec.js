@@ -1,5 +1,5 @@
 var request = require("request");
-var btoa = require("../../common/utils").btoa;
+var btoa = require("../utils").btoa;
 
 var base_url = "http://localhost:3000";
 

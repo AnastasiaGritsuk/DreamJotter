@@ -1,6 +1,7 @@
 function btoa(str) {
-    if (Buffer.byteLength(str) !== str.length)
-        throw new Error('bad string!');
+    if (!str || Buffer.byteLength(str) !== str.length)
+        return 'bad string';
+    
     return Buffer(str, 'binary').toString('base64');
 }
 
