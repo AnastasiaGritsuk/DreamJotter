@@ -3,7 +3,7 @@ var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
 var UserNote = require('../models/note');
 var User = require('../models/user');
-var Guid = require('guid');
+var Uuid = require('node-uuid');
 
 var userMap = {}
 
@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/auth', function(req, res, next) {
-    var token = Guid.create();
+    var token = Uuid.v1();
     var creds = basicAuthParser(req.headers.authorization);
     var username = creds.username;
     var password = creds.password;
