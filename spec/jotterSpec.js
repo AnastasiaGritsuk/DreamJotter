@@ -15,35 +15,33 @@ function loginHeaders(username, pwd) {
     }
 }
 
+function post(url, headers, body, callback) {
+    request.post({
+        headers: headers,
+        url: base_url + url,
+        body: body
+    }, function (error, response, body) {
+        callback(error, response, body);
+    });
+}
+
 describe("Jotter Server", function() {
 
     describe("POST /auth", function() {
         it("user login with valid username and valid password", function(done) {
-            request.post({
-                headers: loginHeaders('admin','1234'),
-                url: base_url + '/auth',
-                body: ''
-            }, function(error, response, body) {
+            post('/auth',loginHeaders('admin', '1234'), '', function (error, response, body) {
                 expect(response.statusCode).toBe(200);
                 done();
             });
         });
         it("user login with valid username and invalid password ", function(done) {
-            request.post({
-                headers: loginHeaders('admin','zzzz'),
-                url: base_url + '/auth',
-                body: ''
-            }, function(error, response, body) {
+            post('/auth',loginHeaders('admin', 'zzzz'), '', function (error, response, body) {
                 expect(response.statusCode).toBe(401);
                 done();
             });
         });
         it("user login with invalid username", function(done) {
-            request.post({
-                headers: loginHeaders('zzzz','1234'),
-                url: base_url + '/auth',
-                body: ''
-            }, function(error, response, body) {
+            post('/auth',loginHeaders('zzzz', '1234'), '', function (error, response, body) {
                 expect(response.statusCode).toBe(401);
                 done();
             });
