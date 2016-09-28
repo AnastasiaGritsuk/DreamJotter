@@ -1,5 +1,5 @@
 /node_modules
 /.idea
 /typings
-/public/js
-/dist
+/client/public/js
+/dist/

@@ -2,7 +2,7 @@ var express = require('express');
 var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
 var UserNote = require('../models/note');
-var User = require('../models/user');
+var User = require('../models//user');
 var Uuid = require('node-uuid');
 
 var userMap = {}

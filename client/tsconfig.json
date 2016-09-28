@@ -11,10 +11,10 @@
     "outDir": "../public/js/app"
   },
   "files": [
-    "./assets/app/*"
+    "client/app/*"
   ],
   "exclude": [
-    "node_modules"
+    "."
   ],
   "atom": {
     "rewriteTsconfig": true

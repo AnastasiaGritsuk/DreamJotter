@@ -1,16 +1,15 @@
 var gulp = require('gulp');
 var run = require('gulp-run');
 
-var appDev = 'assets/app/';
-var appProd = 'public/js/app/';
-var vendor = 'public/js/vendor';
+var appDev = 'client/app/';
+var appProd = 'client/public/js/app/';
+var vendor = 'client/public/js/vendor';
 
 /* JS & TS */
 var typescript = require('gulp-typescript');
 var sourcemaps = require('gulp-sourcemaps');
 
-var tsProject = typescript.createProject('tsconfig.json');
-
+var tsProject = typescript.createProject('client/tsconfig.json');
 
 gulp.task('build-ts', function () {
     return gulp.src(appDev + '**/*.ts')
@@ -69,8 +68,8 @@ gulp.task('dist', function () {
     gulp.src('public/**/*')
         .pipe(gulp.dest('dist/public'));
 
-    gulp.src('assets/**/*')
-        .pipe(gulp.dest('dist/assets'));
+    gulp.src('client/**/*')
+        .pipe(gulp.dest('dist/client'));
 
     gulp.src('bin/**/*')
         .pipe(gulp.dest('dist/bin'));
@@ -102,7 +101,7 @@ gulp.task('default', ['build-ts', 'build-copy']);
 gulp.task('hello-world', function() {
     return gulp.src('../mongo/bin')
         .pipe(run('mongod').exec())
-        .pipe(gulp.dest('output'));   // writes "Hello World\n" to output/echo.
+        .pipe(gulp.dest('output'));
 
 })
 
