@@ -86,6 +86,9 @@ gulp.task('dist', function () {
     gulp.src('client/*.json')
         .pipe(gulp.dest('dist/client'));
     
+    gulp.src('common/*.js')
+        .pipe(gulp.dest('dist/common'));
+    
     gulp.src('*.json')
         .pipe(gulp.dest('dist'));
     
@@ -99,12 +102,12 @@ gulp.task('watch', function () {
     gulp.watch(appDev + '**/*.{html,htm,css}', ['build-copy']);
 });
 
-gulp.task('default', ['build-ts', 'build-copy']);
+gulp.task('mongostart', function() {
+    var mongod = new run.Command('D:/mongo/bin/mongod');
+    mongod.exec();
 
-gulp.task('hello-world', function() {
-    return gulp.src('../mongo/bin')
-        .pipe(run('mongod').exec())
-        .pipe(gulp.dest('output'));
+    var mongo = new run.Command('D:/mongo/bin/mongo');
+    mongo.exec();
+});
 
-})
-
+gulp.task('default', ['build-ts', 'build-copy', 'mongostart']);
