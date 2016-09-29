@@ -1,6 +1,8 @@
 var request = require("request");
 var btoa = require("../utils").btoa;
+var createUser = require("../utils").createUser;
 var base_url = require("../config").base_url;
+var db = require("../config").db;
 
 function loginHeaders(username, pwd) {
     return {

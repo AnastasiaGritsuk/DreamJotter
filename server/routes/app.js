@@ -2,7 +2,7 @@ var express = require('express');
 var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
 var UserNote = require('../models/note');
-var User = require('../models//user');
+var User = require('../models/user');
 var Uuid = require('node-uuid');
 
 var userMap = {}
@@ -28,7 +28,6 @@ router.post('/auth', function(req, res, next) {
                 }
                 if(doc) {
                     if(doc.password === password) {
-                        //doc.securityToken = token;
                         userMap[token] = username;
                         doc.save();
 
