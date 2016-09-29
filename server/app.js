@@ -3,9 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var db = require('../common/config').db;
-var mongoose = require('mongoose');
-mongoose.connect(db.prod);
+
 
 var appRoutes = require('./routes/app');
 var app = express();

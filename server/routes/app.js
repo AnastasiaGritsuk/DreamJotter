@@ -5,6 +5,16 @@ var UserNote = require('../models/note');
 var User = require('../models/user');
 var Uuid = require('node-uuid');
 
+var db = require('../common/config').db;
+var mongoose = require('mongoose');
+var testConn = mongoose.createConnection(db.test);
+var prodConn = mongoose.createConnection(db.prod);
+
+var UserModelProd = testConn.model(User);
+var UserModelTest = prodConn.model(User);
+
+mongoose.connect(db.prod);
+
 var userMap = {}
 
 router.get('/', function(req, res, next) {
