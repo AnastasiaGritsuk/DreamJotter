@@ -11,6 +11,12 @@ function loginHeaders(username, pwd) {
     }
 }
 
+function authHeaders(token) {
+    return {
+        'Authorization': token
+    }
+}
+
 function post(url, headers, body, callback) {
     request.post({
         headers: headers,
@@ -20,6 +26,17 @@ function post(url, headers, body, callback) {
         callback(error, response, body);
     });
 }
+
+function dekete(url, headers, body, callback) {
+    request.delete({
+        headers: headers,
+        url: base_url + url,
+        body: body
+    }, function (error, response, body) {
+        callback(error, response, body);
+    });
+}
+
 
 describe("Jotter Server", function() {
 
@@ -39,6 +56,14 @@ describe("Jotter Server", function() {
         it("user login with invalid username", function(done) {
             post('/auth',loginHeaders('zzzz', '1234'), '', function (error, response, body) {
                 expect(response.statusCode).toBe(401);
+                done();
+            });
+        });
+    });
+    describe("DELETE /auth", function() {
+        it("token is valid", function(done) {
+            delete('/auth',authHeaders('xxx1xxx2'), '', function (error, response, body) {
+                expect(response.statusCode).toBe(200);
                 done();
             });
         });
