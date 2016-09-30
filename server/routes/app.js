@@ -2,18 +2,23 @@ var express = require('express');
 var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
 var UserNote = require('../models/note');
-var User = require('../models/user');
+//var User = require('../models/user');
+
 var Uuid = require('node-uuid');
 
-var db = require('../common/config').db;
+var db = require('../../common/config').db;
+console.log('DB ' + db.prod);
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var testConn = mongoose.createConnection(db.test);
 var prodConn = mongoose.createConnection(db.prod);
 
-var UserModelProd = testConn.model(User);
-var UserModelTest = prodConn.model(User);
+var User = prodConn.model('User', new Schema ({
+    username: String,
+    password: String
+}));
 
-mongoose.connect(db.prod);
+
 
 var userMap = {}
 
@@ -28,6 +33,7 @@ router.post('/auth', function(req, res, next) {
     var password = creds.password;
 
     User.count(function (err, count) {
+        console.log('xxx');
         if (!err && count === 0) {
             populateDB();
         }else {
@@ -56,11 +62,11 @@ router.post('/auth', function(req, res, next) {
 
         var newuser = {
             username:  username,
-            password: password,
-            securityToken: token
+            password: password
         };
         var user = new User(newuser);
         user.save();
+        userMap[token] = username;
 
         return res.status(200).json({
             data: token
