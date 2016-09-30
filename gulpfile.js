@@ -1,7 +1,5 @@
 var gulp = require('gulp');
 var run = require('gulp-run');
-//var createUser = require('./common/utils').createUser;
-
 var appDev = 'client/app/';
 var appProd = 'client/public/js/app/';
 var vendor = 'client/public/js/vendor';
