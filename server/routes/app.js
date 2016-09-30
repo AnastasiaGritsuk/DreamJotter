@@ -34,47 +34,24 @@ router.post('/auth', function(req, res, next) {
     var creds = basicAuthParser(req.headers.authorization);
     var username = creds.username;
     var password = creds.password;
-
-    User.count(function (err, count) {
-        console.log('xxx');
-        if (!err && count === 0) {
-            populateDB();
-        }else {
-            User.findOne({username: username}, function (err, doc) {
-                if(err) {
-                    console.log('unhandled error');
-                    throw  err;
-                }
-                if(doc) {
-                    if(doc.password === password) {
-                        userMap[token] = username;
-                        doc.save();
-
-                        return res.status(200).json({
-                            data: token
-                        });
-                    }
-                }
-                return res.status(401).send('Unauthorized');
-            });
+    
+    User.findOne({username: username}, function (err, doc) {
+        if(err) {
+            console.log('unhandled error');
+            throw  err;
         }
+        if(doc) {
+            if(doc.password === password) {
+                userMap[token] = username;
+                doc.save();
+
+                return res.status(200).json({
+                    data: token
+                });
+            }
+        }
+        return res.status(401).send('Unauthorized');
     });
-
-    function populateDB() {
-        console.log('population starts');
-
-        var newuser = {
-            username:  username,
-            password: password
-        };
-        var user = new User(newuser);
-        user.save();
-        userMap[token] = username;
-
-        return res.status(200).json({
-            data: token
-        });
-    }
 });
 
 router.delete('/auth', function(req, res, next) {

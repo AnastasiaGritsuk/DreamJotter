@@ -1,9 +1,11 @@
 var gulp = require('gulp');
 var run = require('gulp-run');
+//var createUser = require('./common/utils').createUser;
 
 var appDev = 'client/app/';
 var appProd = 'client/public/js/app/';
 var vendor = 'client/public/js/vendor';
+
 
 /* JS & TS */
 var typescript = require('gulp-typescript');
@@ -108,6 +110,10 @@ gulp.task('mongostart', function() {
 
     var mongo = new run.Command('D:/mongo/bin/mongo');
     mongo.exec();
+});
+
+gulp.task('prepareDb', function () {
+    //createUser();
 });
 
 gulp.task('default', ['build-ts', 'build-copy', 'mongostart']);
