@@ -4,7 +4,6 @@ var appDev = 'client/app/';
 var appProd = 'client/public/js/app/';
 var vendor = 'client/public/js/vendor';
 
-
 /* JS & TS */
 var typescript = require('gulp-typescript');
 var sourcemaps = require('gulp-sourcemaps');
@@ -108,10 +107,6 @@ gulp.task('mongostart', function() {
 
     var mongo = new run.Command('D:/mongo/bin/mongo');
     mongo.exec();
-});
-
-gulp.task('prepareDb', function () {
-    //createUser();
 });
 
 gulp.task('default', ['build-ts', 'build-copy', 'mongostart']);
