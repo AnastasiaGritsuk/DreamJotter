@@ -1,8 +1,6 @@
 var request = require("request");
 var btoa = require("../utils").btoa;
-var createUser = require("../utils").createUser;
 var base_url = require("../config").base_url;
-var db = require("../config").db;
 
 function loginHeaders(username, pwd) {
     return {
@@ -27,7 +25,7 @@ function post(url, headers, body, callback) {
     });
 }
 
-function dekete(url, headers, body, callback) {
+function del(url, headers, body, callback) {
     request.delete({
         headers: headers,
         url: base_url + url,
@@ -40,9 +38,15 @@ function dekete(url, headers, body, callback) {
 
 describe("Jotter Server", function() {
 
+    var map = {};
+
     describe("POST /auth", function() {
         it("user login with valid username and valid password", function(done) {
-            post('/auth',loginHeaders('admin', '1234'), '', function (error, response, body) {
+            post('/auth',loginHeaders('admin', 'admin'), '', function (error, response, body) {
+                
+                var token = JSON.parse(body).data;
+                console.log(token);
+                map['admin'] = token;
                 expect(response.statusCode).toBe(200);
                 done();
             });
@@ -62,7 +66,8 @@ describe("Jotter Server", function() {
     });
     describe("DELETE /auth", function() {
         it("token is valid", function(done) {
-            delete('/auth',authHeaders('xxx1xxx2'), '', function (error, response, body) {
+            del('/auth',authHeaders(map['admin']), '', function (error, response, body) {
+                console.log(response.body);
                 expect(response.statusCode).toBe(200);
                 done();
             });
