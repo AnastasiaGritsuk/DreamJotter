@@ -38,15 +38,9 @@ function del(url, headers, body, callback) {
 
 describe("Jotter Server", function() {
 
-    var map = {};
-
     describe("POST /auth", function() {
         it("user login with valid username and valid password", function(done) {
             post('/auth',loginHeaders('admin', 'admin'), '', function (error, response, body) {
-                
-                var token = JSON.parse(body).data;
-                console.log(token);
-                map['admin'] = token;
                 expect(response.statusCode).toBe(200);
                 done();
             });
@@ -64,12 +58,46 @@ describe("Jotter Server", function() {
             });
         });
     });
-    describe("DELETE /auth", function() {
-        it("token is valid", function(done) {
-            del('/auth',authHeaders(map['admin']), '', function (error, response, body) {
-                console.log(response.body);
-                expect(response.statusCode).toBe(200);
+
+    describe("auth", function() {
+        var token;
+        beforeEach(function(done) {
+            post('/auth',loginHeaders('admin', 'admin'), '', function (error, response, body) {
+                token = JSON.parse(body).data;
+                console.log("Before " + token);
                 done();
+            });
+        });
+
+        describe("DELETE", function() {
+            it("token is valid", function(done) {
+                del('/auth',authHeaders(token), '', function (error, response, body) {
+                    expect(response.statusCode).toBe(200);
+                    console.log("xxx1 " + token);
+                    done();
+                });
+            });
+
+            it("token is null", function(done) {
+                del('/auth',authHeaders(null), '', function (error, response, body) {
+                    expect(response.statusCode).toBe(401);
+                    console.log("xxx2 " + token);
+                    done();
+                });
+            });
+            it("token is undefined", function(done) {
+                del('/auth',authHeaders(undefined), '', function (error, response, body) {
+                    expect(response.statusCode).toBe(401);
+                    console.log("xxx2 " + token);
+                    done();
+                });
+            });
+            it("token does not exist in db", function(done) {
+                del('/auth',authHeaders('xxx'), '', function (error, response, body) {
+                    expect(response.statusCode).toBe(401);
+                    console.log("xxx2 " + token);
+                    done();
+                });
             });
         });
     });
