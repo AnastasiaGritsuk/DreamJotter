@@ -1,23 +1,26 @@
 var express = require('express');
 var basicAuthParser = require('basic-auth-parser');
 var router = express.Router();
-var UserNote = require('../models/note');
+//var UserNote = require('../models/note');
 //var User = require('../models/user');
 
 var Uuid = require('node-uuid');
-
 var db = require('../../common/config').db;
-console.log('DB ' + db.prod);
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var testConn = mongoose.createConnection(db.test);
-var prodConn = mongoose.createConnection(db.prod);
 
-var User = prodConn.model('User', new Schema ({
+var conn = mongoose.createConnection(db.prod);
+
+var User = conn.model('User', new Schema ({
     username: String,
     password: String
 }));
 
+var UserNote = conn.model('Note',new Schema({
+    name: String,
+    text: String,
+    user: String
+}));
 
 
 var userMap = {}
