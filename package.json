@@ -9,7 +9,7 @@
     "gulp": "npm run vendor && gulp",
     "postinstall": "typings install",
     "typings": "typings",
-    "test": "./node_modules/.bin/jasmine-node common/tests"
+    "test": "./node_modules/.bin/jasmine-node tests"
   },
   "dependencies": {
     "basic-auth-parser": "0.0.2",
