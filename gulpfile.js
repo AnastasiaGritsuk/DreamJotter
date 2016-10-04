@@ -91,6 +91,9 @@ gulp.task('dist', function () {
     gulp.src('*.json')
         .pipe(gulp.dest('dist'));
     
+    gulp.src('config.js')
+        .pipe(gulp.dest('dist'));
+    
     return gulp.src('server/app.js')
         .pipe(gulp.dest('dist/server'));
 

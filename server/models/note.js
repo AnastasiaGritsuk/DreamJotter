@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var db = require('../../common/config').db;
+var db = require('../../config').db;
 
 var userNoteSchema = new Schema({
     name: String,
