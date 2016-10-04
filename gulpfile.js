@@ -1,15 +1,14 @@
 var gulp = require('gulp');
-
-var appDev = 'assets/app/';
-var appProd = 'public/js/app/';
-var vendor = 'public/js/vendor';
+var run = require('gulp-run');
+var appDev = 'client/app/';
+var appProd = 'client/public/js/app/';
+var vendor = 'client/public/js/vendor';
 
 /* JS & TS */
 var typescript = require('gulp-typescript');
 var sourcemaps = require('gulp-sourcemaps');
 
-var tsProject = typescript.createProject('tsconfig.json');
-
+var tsProject = typescript.createProject('client/tsconfig.json');
 
 gulp.task('build-ts', function () {
     return gulp.src(appDev + '**/*.ts')
@@ -64,9 +63,53 @@ gulp.task('vendor', function() {
         .pipe(gulp.dest(vendor + '/zone.js/'));
 });
 
+gulp.task('dist', function () {
+    gulp.src('client/public/**/*')
+        .pipe(gulp.dest('dist/client/public'));
+
+    gulp.src('client/app/**/*')
+        .pipe(gulp.dest('dist/client/app'));
+
+    gulp.src('server/bin/**/*')
+        .pipe(gulp.dest('dist/server/bin'));
+
+    gulp.src('server/models/**/*')
+        .pipe(gulp.dest('dist/server/models'));
+
+    gulp.src('server/routes/**/*')
+        .pipe(gulp.dest('dist/server/routes'));
+
+    gulp.src('client/views/**/*')
+        .pipe(gulp.dest('dist/client/views'));
+
+    gulp.src('client/*.json')
+        .pipe(gulp.dest('dist/client'));
+    
+    gulp.src('common/*.js')
+        .pipe(gulp.dest('dist/common'));
+    
+    gulp.src('*.json')
+        .pipe(gulp.dest('dist'));
+    
+    gulp.src('config.js')
+        .pipe(gulp.dest('dist'));
+    
+    return gulp.src('server/app.js')
+        .pipe(gulp.dest('dist/server'));
+
+});
+
 gulp.task('watch', function () {
     gulp.watch(appDev + '**/*.ts', ['build-ts']);
     gulp.watch(appDev + '**/*.{html,htm,css}', ['build-copy']);
 });
 
-gulp.task('default', ['build-ts', 'build-copy']);
+gulp.task('mongostart', function() {
+    var mongod = new run.Command('D:/mongo/bin/mongod');
+    mongod.exec();
+
+    var mongo = new run.Command('D:/mongo/bin/mongo');
+    mongo.exec();
+});
+
+gulp.task('default', ['build-ts', 'build-copy', 'mongostart']);
