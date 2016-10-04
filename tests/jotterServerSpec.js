@@ -37,30 +37,9 @@ function del(url, headers, body, callback) {
 
 
 describe("Jotter Server", function() {
-
-    describe("POST /auth", function() {
-        it("user login with valid username and valid password", function(done) {
-            post('/auth',loginHeaders('admin', 'admin'), '', function (error, response, body) {
-                expect(response.statusCode).toBe(200);
-                done();
-            });
-        });
-        it("user login with valid username and invalid password ", function(done) {
-            post('/auth',loginHeaders('admin', 'zzzz'), '', function (error, response, body) {
-                expect(response.statusCode).toBe(401);
-                done();
-            });
-        });
-        it("user login with invalid username", function(done) {
-            post('/auth',loginHeaders('zzzz', '1234'), '', function (error, response, body) {
-                expect(response.statusCode).toBe(401);
-                done();
-            });
-        });
-    });
-
-    describe("auth", function() {
-        var token;
+    var token;
+    
+    describe("Auth", function() {
         beforeEach(function(done) {
             if(token) {
                 done();
@@ -73,7 +52,7 @@ describe("Jotter Server", function() {
             });
         });
 
-        describe("DELETE", function() {
+        describe("/auth", function() {
             it("token is valid", function(done) {
                 del('/auth',authHeaders(token), '', function (error, response, body) {
                     expect(response.statusCode).toBe(200);
@@ -81,7 +60,6 @@ describe("Jotter Server", function() {
                     done();
                 });
             });
-
             it("token is null", function(done) {
                 del('/auth',authHeaders(null), '', function (error, response, body) {
                     expect(response.statusCode).toBe(401);
@@ -104,5 +82,61 @@ describe("Jotter Server", function() {
                 });
             });
         });
+        describe("/note", function() {
+            it("token is valid", function(done) {
+                post('/note',authHeaders(token), '', function (error, response, body) {
+                    expect(response.statusCode).toBe(200);
+                    console.log("xxx1 " + token);
+                    done();
+                });
+            });
+            it("token is null", function(done) {
+                post('/note',authHeaders(null), '', function (error, response, body) {
+                    expect(response.statusCode).toBe(401);
+                    console.log("xxx2 " + token);
+                    done();
+                });
+            });
+            it("token is undefined", function(done) {
+                post('/note',authHeaders(undefined), '', function (error, response, body) {
+                    expect(response.statusCode).toBe(401);
+                    console.log("xxx2 " + token);
+                    done();
+                });
+            });
+            it("token does not exist in db", function(done) {
+                post('/note'',authHeaders('xxx'), '', function (error, response, body) {
+                    expect(response.statusCode).toBe(401);
+                    console.log("xxx2 " + token);
+                    done();
+                });
+            });
+        });
+
+        describe("API", function() {
+            describe("POST /auth", function() {
+                it("user login with valid username and valid password", function(done) {
+                    console.log('My token goed here ' + token);
+                    post('/auth',loginHeaders('admin', 'admin'), '', function (error, response, body) {
+                        expect(response.statusCode).toBe(200);
+                        done();
+                    });
+                });
+                it("user login with valid username and invalid password ", function(done) {
+                    post('/auth',loginHeaders('admin', 'zzzz'), '', function (error, response, body) {
+                        expect(response.statusCode).toBe(401);
+                        done();
+                    });
+                });
+                it("user login with invalid username", function(done) {
+                    post('/auth',loginHeaders('zzzz', '1234'), '', function (error, response, body) {
+                        expect(response.statusCode).toBe(401);
+                        done();
+                    });
+                });
+            });
+
     });
+
+
 });
