@@ -62,6 +62,10 @@ describe("Jotter Server", function() {
     describe("auth", function() {
         var token;
         beforeEach(function(done) {
+            if(token) {
+                done();
+                return;
+            };
             post('/auth',loginHeaders('admin', 'admin'), '', function (error, response, body) {
                 token = JSON.parse(body).data;
                 console.log("Before " + token);
