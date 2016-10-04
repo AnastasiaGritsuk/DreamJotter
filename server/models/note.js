@@ -8,7 +8,4 @@ var userNoteSchema = new Schema({
     user: String
 }, {collection: 'notes'});
 
-module.exports = {
-    prod: mongoose.createConnection(db.prod).model('UserNote', userNoteSchema),
-    test: mongoose.createConnection(db.test).model('UserNote', userNoteSchema)
-};
+module.exports = mongoose.createConnection(db).model('UserNote', userNoteSchema);

@@ -7,7 +7,4 @@ var userSchema = new Schema ({
 	password: String
 }, {collection: 'users'});
 
-module.exports = {
-	prod: mongoose.createConnection(db.prod).model('User', userSchema),
-	test: mongoose.createConnection(db.test).model('User', userSchema)
-}
+module.exports = mongoose.createConnection(db).model('User', userSchema);

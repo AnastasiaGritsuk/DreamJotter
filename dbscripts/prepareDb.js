@@ -1,32 +1,14 @@
-var UserProd = require('../server/models/user').prod;
-var UserTest = require('../server/models/user').test;
+var DefaultUser = require('../server/models/user');
 
 function createUser() {
-    console.log('xxxprod begin');
-    UserProd.count(function (err, count) {
-        console.log('xxxprod');
+    DefaultUser.count(function (err, count) {
         if (!err && count === 0) {
-            console.log('prodtxxx');
-            var defaultUser = {
+            var user = {
                 username: 'admin',
                 password: 'admin'
             }
 
-            var user = new UserProd(defaultUser);
-            user.save();
-        }
-    });
-
-    UserTest.count(function (err, count) {
-        console.log('xxxtest');
-        if (!err && count === 0) {
-            console.log('testxxx');
-            var defaultUser = {
-                username: 'test',
-                password: 'test'
-            }
-
-            var user = new UserTest(defaultUser);
+            var user = new DefaultUser(user);
             user.save();
         }
     });
@@ -34,6 +16,4 @@ function createUser() {
 
 createUser();
 
-module.exports = {
-    createUser: createUser
-}
+module.exports = createUser;
