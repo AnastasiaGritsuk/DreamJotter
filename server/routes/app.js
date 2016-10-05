@@ -71,12 +71,13 @@ router.get('/note/:key', function(req, res, next) {
 
 router.post('/note', function(req, res, next) {
     var token = req.headers.authorization;
+    console.log('server token ' + token);
     var note = {};
     note.name = req.body.name;
     note.text = req.body.text;
     
     var user = userMap[token];
-
+    console.log('server user ' + user);
     if(user) {
         note.user = user;
         var userNote = new UserNote(note);
