@@ -17,6 +17,8 @@ function authHeaders(token) {
 }
 
 function post(url, headers, body, callback) {
+    console.log('my url ' + base_url + url);
+    console.log('my body ' + body);
     request.post({
         headers: headers,
         url: base_url + url,
@@ -86,7 +88,7 @@ describe('Server', function() {
     
         it("user wants to save note", function (done) {
             console.log('token ' + token);
-            post('/note', authHeaders(token), {name:'test',text:'100'}, function (error, response, body) {
+            post('/note', authHeaders(token), JSON.stringify({name:'test',text:'100'}), function (error, response, body) {
                 expect(response.statusCode).toBe(200);
                 done();
             });
