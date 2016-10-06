@@ -38,6 +38,15 @@ function del(url, headers, body, callback) {
     });
 }
 
+function get(url, headers, callback) {
+    request.get({
+        headers: headers,
+        url: base_url + url
+    }, function (error, response, body) {
+        callback(error, response, body);
+    });
+}
+
 describe('Server', function() {
     describe('Authentification', function () {
         it("user login with valid username and valid password", function(done) {
@@ -87,8 +96,15 @@ describe('Server', function() {
         });
     
         it("user wants to save note", function (done) {
-            console.log('token ' + token);
             post('/note', authHeaders(token), JSON.stringify({name:'test',text:'100'}), function (error, response, body) {
+                expect(response.statusCode).toBe(200);
+                done();
+            });
+        });
+
+        it("user wants to find note by key", function (done) {
+            get('/note/test', authHeaders(token), function (error, response, body) {
+                console.log('error ' + error);
                 expect(response.statusCode).toBe(200);
                 done();
             });
