@@ -95,17 +95,23 @@ describe('Server', function() {
             });
         });
     
-        it("user wants to save note", function (done) {
+        it("user inserts valid note", function (done) {
             post('/note', authHeaders(token), JSON.stringify({name:'test',text:'100'}), function (error, response, body) {
                 expect(response.statusCode).toBe(200);
                 done();
             });
         });
 
-        it("user wants to find note by key", function (done) {
+        it("user get note by valid key", function (done) {
             get('/note/test', authHeaders(token), function (error, response, body) {
-                console.log('error ' + error);
                 expect(response.statusCode).toBe(200);
+                done();
+            });
+        });
+
+        it("user get note by invalid key", function (done) {
+            get('/note/zzzz', authHeaders(token), function (error, response, body) {
+                expect(response.statusCode).toBe(404);
                 done();
             });
         });
