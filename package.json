@@ -8,8 +8,7 @@
     "dist": "gulp dist",
     "gulp": "npm run vendor && gulp",
     "postinstall": "typings install",
-    "typings": "typings",
-    "test": "./node_modules/.bin/jasmine-node tests tests"
+    "typings": "typings"
   },
   "dependencies": {
     "basic-auth-parser": "0.0.2",
@@ -37,6 +36,7 @@
     "debug": "^2.2.0",
     "es6-shim": "^0.35.0",
     "gulp": "^3.9.0",
+    "gulp-jasmine": "^2.4.2",
     "gulp-run": "^1.7.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-typescript": "^2.10.0",

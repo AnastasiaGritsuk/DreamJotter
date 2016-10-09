@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var jasmine = require('gulp-jasmine');
 var run = require('gulp-run');
 var appDev = 'client/app/';
 var appProd = 'client/public/js/app/';
@@ -111,5 +112,13 @@ gulp.task('mongostart', function() {
     var mongo = new run.Command('D:/mongo/bin/mongo');
     mongo.exec();
 });
+
+gulp.task('tests', function() {
+    gulp.src('tests/*')
+        .pipe(jasmine());
+    gulp.src('common/tests/*')
+        .pipe(jasmine());
+});
+
 
 gulp.task('default', ['build-ts', 'build-copy', 'mongostart']);
