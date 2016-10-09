@@ -80,11 +80,14 @@ router.post('/note', function(req, res, next) {
     var user = userMap[token];
     console.log('server user ' + user);
     if(user) {
-        note.user = user;
-        var userNote = new UserNote(note);
-        userNote.save();
+        if(note.name !== '' && note.text !== ''){
+            note.user = user;
+            var userNote = new UserNote(note);
+            userNote.save();
 
-        return res.status(200).send('Note has been saved');
+            return res.status(200).send('Note has been saved');
+        }
+        return res.status(400).send('Invalid data');
     }
 
     return res.status(401).send('Unauthorized');

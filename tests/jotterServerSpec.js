@@ -102,6 +102,13 @@ describe('Server', function() {
             });
         });
 
+        it("user inserts invalid note", function (done) {
+            post('/note', authHeaders(token), JSON.stringify({name:'',text:''}), function (error, response, body) {
+                expect(response.statusCode).toBe(400);
+                done();
+            });
+        });
+
         it("user get note by valid key", function (done) {
             get('/note/test', authHeaders(token), function (error, response, body) {
                 expect(response.statusCode).toBe(200);

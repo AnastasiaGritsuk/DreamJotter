@@ -105,7 +105,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('mongostart', function() {
-    var mongod = new run.Command('D:/mongo/bin/mongod');
+    var mongod = new run.Command('D:/mongo/bin/mongod --storageEngine=mmapv1 --dbpath D:/mongo');
     mongod.exec();
 
     var mongo = new run.Command('D:/mongo/bin/mongo');
