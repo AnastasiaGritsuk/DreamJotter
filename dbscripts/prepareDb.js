@@ -1,6 +1,7 @@
 var DefaultUser = require('../server/models/user');
 
 function createUser() {
+    console.log('xxx');
     DefaultUser.count(function (err, count) {
         if (!err && count === 0) {
             var user = {
@@ -13,7 +14,5 @@ function createUser() {
         }
     });
 }
-
-createUser();
 
 module.exports = createUser;

@@ -4,6 +4,7 @@ var run = require('gulp-run');
 var appDev = 'client/app/';
 var appProd = 'client/public/js/app/';
 var vendor = 'client/public/js/vendor';
+var createUser = require('./dbscripts/prepareDb');
 
 /* JS & TS */
 var typescript = require('gulp-typescript');
@@ -120,7 +121,5 @@ gulp.task('tests', function() {
         .pipe(jasmine());
 });
 
-
 gulp.task('gulp', ['build-ts', 'build-copy', 'mongostart']);
-
 gulp.task('build', ['vendor', 'gulp', 'dist']);
