@@ -107,11 +107,11 @@ gulp.task('watch', function () {
 });
 
 gulp.task('mongostart', function() {
-    var mongod = new run.Command('D:/mongo/bin/mongod --storageEngine=mmapv1 --dbpath D:/mongo');
-    mongod.exec();
-
-    var mongo = new run.Command('D:/mongo/bin/mongo');
-    mongo.exec();
+    var mongod = new run.Command('mongod --storageEngine=mmapv1 --dbpath D:/mongo');
+    mongod.exec(function () {
+        var mongo = new run.Command('mongo');
+        mongo.exec();
+    });
 });
 
 gulp.task('tests', function() {
