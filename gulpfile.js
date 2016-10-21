@@ -121,4 +121,6 @@ gulp.task('tests', function() {
 });
 
 
-gulp.task('default', ['build-ts', 'build-copy', 'mongostart']);
+gulp.task('gulp', ['build-ts', 'build-copy', 'mongostart']);
+
+gulp.task('build', ['vendor', 'gulp', 'dist']);
