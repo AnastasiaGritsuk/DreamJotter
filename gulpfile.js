@@ -9,7 +9,7 @@ var vendor = 'client/public/js/vendor';
 var typescript = require('gulp-typescript');
 var sourcemaps = require('gulp-sourcemaps');
 
-var tsProject = typescript.createProject('client/tsconfig.json');
+var tsProject = typescript.createProject('tsconfig.json');
 
 gulp.task('build-ts', function () {
     return gulp.src(appDev + '**/*.ts')

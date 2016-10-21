@@ -4,6 +4,7 @@ var router = express.Router();
 var UserNote = require('../models/note');
 var User = require('../models/user');
 var Uuid = require('node-uuid');
+var db = require('../../config').db;
 
 var userMap = {}
 
@@ -17,7 +18,7 @@ router.post('/auth', function(req, res, next) {
     var username = creds.username;
     var password = creds.password;
     
-    User.findOne({username: username}, function (err, doc) {
+    User(db).findOne({username: username}, function (err, doc) {
         if(err) {
             console.log('unhandled error');
             throw  err;
@@ -53,7 +54,7 @@ router.get('/note/:key', function(req, res, next) {
     var user = userMap[token];
 
     if(user) {
-        UserNote.find({user: user, name: key}, function (err, doc) {
+        UserNote(db).find({user: user, name: key}, function (err, doc) {
             if(err) throw  err;
             if(doc.length !== 0) {
                 doc.forEach(function (note) {
@@ -78,11 +79,10 @@ router.post('/note', function(req, res, next) {
     note.text = req.body.text;
     
     var user = userMap[token];
-    console.log('server user ' + user);
     if(user) {
         if(note.name !== '' && note.text !== ''){
             note.user = user;
-            var userNote = new UserNote(note);
+            var userNote = new UserNote(db)(note);
             userNote.save();
 
             return res.status(200).send('Note has been saved');

@@ -1,4 +1,4 @@
-///<reference path="../typings.d.ts"/>
+///<reference path="../../typings.d.ts"/>
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { HTTP_PROVIDERS } from '@angular/http';
 
