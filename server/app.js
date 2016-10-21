@@ -3,7 +3,12 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var db = require('./../config').db;
 
+mongoose.connect(db, function (error) {
+    console.log('db connect ' + error);
+});
 
 var appRoutes = require('./routes/app');
 var app = express();
