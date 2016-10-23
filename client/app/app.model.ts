@@ -61,6 +61,21 @@ export class AppModel {
 			);
 	}
 
+	remove(id:string) {
+		return this.svc.removeNote(id, this.securityToken)
+			.subscribe(
+				note => {
+					this.errStatus = null;
+					let index = this.notes.indexOf(note);
+					if (index > -1) {
+						this.notes.splice(index, 1);
+					}
+					console.log('remove: end');
+				},
+				err => this.errStatus = err
+			);
+	}
+
 	getLogged() {
 		return this.securityToken !== null;
 	}

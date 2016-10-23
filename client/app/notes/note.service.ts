@@ -51,6 +51,17 @@ export class NoteService {
 			.map(this.extractData)
 			.catch(this.handleError);
 	}
+	
+	removeNote(id:string, token:string):Observable<any> {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': token
+        });
+
+        var url = `/note/${id}`;
+
+        return this.http.delete('url', {headers: headers});
+    }
 
 	private handleError(error:any) {
 		let errMsg = (error.message) ? error.message :

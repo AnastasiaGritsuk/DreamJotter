@@ -92,4 +92,18 @@ router.post('/note', function(req, res, next) {
     return res.status(401).send('Unauthorized');
 });
 
+router.delete('/note/:id', function(req, res, next) {
+    var token = req.headers.authorization;
+    
+    var user = userMap[token];
+
+    if(user) {
+        UserNote.find({id: id}).remove(function (err, doc) {
+            console.log('remove ' + doc);
+            console.log('remove err ' + err);
+        });
+    } else
+        return res.status(401).send('Unauthorized');
+});
+
 module.exports = router;

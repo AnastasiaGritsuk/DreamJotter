@@ -27,7 +27,7 @@ export class NoteListComponent implements OnInit{
 		this.app.find(key);
     }
 
-	onDeleteClick {
-
+	onDeleteClick(id) {
+		this.app.remove(id);
 	}
 }

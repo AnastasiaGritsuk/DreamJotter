@@ -10,8 +10,8 @@
 		<article class="panel panel-default" *ngFor="let note of app.notes">
 			<div class="panel-body">
 				<span class="note-name text-primary">{{ note.name }}</span>
-				<span class="note-value"> {{ note.text }}</span>
-				<span class="glyphicon glyphicon-remove pull-right" (click)="onDeleteClick"></span>
+				<span class="note-value"> {{ note.text }} id {{ note._id }}</span>
+				<span class="glyphicon glyphicon-remove pull-right" (click)="onDeleteClick(note._id)"></span>
 			</div>
 		</article>
 	</div>
