@@ -69,37 +69,40 @@ gulp.task('vendor', function() {
 
 gulp.task('dist', function () {
     gulp.src('client/public/**/*')
-        .pipe(gulp.dest('dist/client/public'));
+        .pipe(gulp.dest('../dist/client/public'));
 
     gulp.src('client/app/**/*')
-        .pipe(gulp.dest('dist/client/app'));
+        .pipe(gulp.dest('../dist/client/app'));
 
     gulp.src('server/bin/**/*')
-        .pipe(gulp.dest('dist/server/bin'));
+        .pipe(gulp.dest('../dist/server/bin'));
 
     gulp.src('server/models/**/*')
-        .pipe(gulp.dest('dist/server/models'));
+        .pipe(gulp.dest('../dist/server/models'));
 
     gulp.src('server/routes/**/*')
-        .pipe(gulp.dest('dist/server/routes'));
+        .pipe(gulp.dest('../dist/server/routes'));
 
     gulp.src('client/views/**/*')
-        .pipe(gulp.dest('dist/client/views'));
+        .pipe(gulp.dest('../dist/client/views'));
 
     gulp.src('client/*.json')
-        .pipe(gulp.dest('dist/client'));
+        .pipe(gulp.dest('../dist/client'));
     
     gulp.src('common/*.js')
-        .pipe(gulp.dest('dist/common'));
+        .pipe(gulp.dest('../dist/common'));
     
     gulp.src('*.json')
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('../dist'));
     
     gulp.src('config.js')
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('../dist'));
+
+    gulp.src('typings.d.ts')
+        .pipe(gulp.dest('../dist'));
     
     return gulp.src('server/app.js')
-        .pipe(gulp.dest('dist/server'));
+        .pipe(gulp.dest('../dist/server'));
 
 });
 
