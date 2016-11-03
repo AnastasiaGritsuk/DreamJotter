@@ -7,6 +7,15 @@ var bodyParser = require('body-parser');
 var appRoutes = require('./routes/app');
 var app = express();
 
+var mongoose = require('mongoose');
+var db = require('../config').db;
+
+mongoose.connect(db, function (error) {
+    console.log('connect to ' + db);
+    if(error)
+        throw err;
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, '../client/views'));
 app.set('view engine', 'hbs');

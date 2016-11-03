@@ -4,6 +4,8 @@ var run = require('gulp-run');
 var appDev = 'client/app/';
 var appProd = 'client/public/js/app/';
 var vendor = 'client/public/js/vendor';
+var mongoose = require('mongoose');
+var db = require('./config').db;
 var createUser = require('./dbscripts/prepareDb');
 
 /* JS & TS */
@@ -107,10 +109,22 @@ gulp.task('watch', function () {
 });
 
 gulp.task('mongostart', function() {
-    var mongod = new run.Command('mongod --storageEngine=mmapv1 --dbpath D:/mongo');
+    var mongod = new run.Command('start mongod --dbpath D:/mongo');
     mongod.exec(function () {
-        var mongo = new run.Command('mongo');
-        mongo.exec();
+        mongoose.connection.on('connected', function () {
+            console.log('Mongoose default connection open to ' + db);
+        });
+
+        mongoose.connection.on('error',function (err) {
+            console.log('Mongoose default connection error: ' + err);
+        });
+
+        mongoose.connect(db, function (error) {
+            console.log('connect ' + db);
+            if(error)
+                throw err;
+            createUser();
+        });
     });
 });
 
