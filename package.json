@@ -13,12 +13,11 @@
     "debug": "^2.2.0",
     "express": "~4.13.1",
     "hbs": "~3.1.0",
-    "mongodb": "^2.2.9",
     "mongoose": "^4.5.8",
     "morgan": "~1.6.1",
     "node-uuid": "^1.4.7",
-    "request": "^2.74.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "typings": "^0.8.1"
   },
   "devDependencies": {
     "@angular/common": "2.0.0-rc.1",
@@ -41,6 +40,6 @@
     "rxjs": "5.0.0-beta.6",
     "systemjs": "0.19.27",
     "zone.js": "^0.6.12",
-    "typings": "^0.8.1"
+    "request": "^2.74.0"
   }
 }
