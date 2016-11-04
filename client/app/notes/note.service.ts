@@ -60,7 +60,9 @@ export class NoteService {
 
         var url = `/note/${id}`;
 
-        return this.http.delete('url', {headers: headers});
+        return this.http.delete(url, {headers: headers})
+			.map(this.extractData)
+			.catch(this.handleError);
     }
 
 	private handleError(error:any) {

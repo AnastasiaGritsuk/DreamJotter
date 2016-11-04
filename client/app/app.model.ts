@@ -66,11 +66,17 @@ export class AppModel {
 			.subscribe(
 				note => {
 					this.errStatus = null;
-					let index = this.notes.indexOf(note);
+					let deletedItem = this.notes.find(function(x:any) {
+						return x._id === note._id;
+					});
+					var index = this.notes.indexOf(deletedItem);
+
 					if (index > -1) {
 						this.notes.splice(index, 1);
+						console.log('remove: end');
+						return;
 					}
-					console.log('remove: end');
+					console.log('remove: something went wrong');
 				},
 				err => this.errStatus = err
 			);

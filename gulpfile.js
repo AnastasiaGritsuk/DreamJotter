@@ -125,7 +125,7 @@ gulp.task('mongostart', function() {
         mongoose.connect(db, function (error) {
             console.log('connect ' + db);
             if(error)
-                throw err;
+                throw error;
             createUser();
         });
     });
