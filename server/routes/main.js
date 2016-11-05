@@ -110,10 +110,4 @@ router.delete('/note/:id', function(req, res, next) {
         return res.status(401).send('Unauthorized');
 });
 
-router.get('*', function (req, res, next) {
-    var err = new Error('Not found');
-    err.status = 404;
-    next(err);
-});
-
 module.exports = router;

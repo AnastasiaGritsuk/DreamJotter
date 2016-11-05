@@ -101,7 +101,7 @@ gulp.task('dist', function () {
     gulp.src('typings.d.ts')
         .pipe(gulp.dest('../dist'));
     
-    return gulp.src('server/app.js')
+    return gulp.src('server/main.js')
         .pipe(gulp.dest('../dist/server'));
 
 });
