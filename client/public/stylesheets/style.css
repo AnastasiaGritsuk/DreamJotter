@@ -38,3 +38,22 @@ a.danger {
 .form-control {
   margin-bottom: 20px;
 }
+
+.center-block {
+    float: none;
+}
+
+.btn-login {
+    background-color: #24a1db;
+    border-color: #057696;
+    width: 125px
+}
+
+.page-header {
+    border-color: #24a1db;
+    color: #000000;
+}
+
+.h3 {
+    color: #222222;
+}

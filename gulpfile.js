@@ -23,7 +23,6 @@ gulp.task('build-ts', function () {
 });
 
 gulp.task('build-copy', function () {
-
     return gulp.src([appDev + '**/*.html', appDev + '**/*.htm', appDev + '**/*.css'])
         .pipe(gulp.dest(appProd));
 });
@@ -140,3 +139,4 @@ gulp.task('tests', function() {
 
 gulp.task('gulp', ['build-ts', 'build-copy', 'mongostart']);
 gulp.task('build', ['vendor', 'gulp', 'dist']);
+gulp.task('build-sub', ['vendor', 'build-ts', 'build-copy']);
