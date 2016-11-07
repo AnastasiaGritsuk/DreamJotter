@@ -8,7 +8,7 @@
 				</a>
 			</h1>
 			<div class="service">
-				<a href="" (click) = "onLogout()" class="service-link">
+				<a href="#" (click) = "onLogout()" class="service-link">
 					<span class="text">Logout</span>
 				</a>
 			</div>
@@ -17,20 +17,21 @@
 </div>
 <div class="row">
 	<div class="col-md-8 center-block">
-		<textarea [(ngModel)]="inputModel" row="1" type="text" class="form-control"></textarea>
+		<div class="form-control-group">
+			<textarea [(ngModel)]="inputModel" row="1" type="text" class="form-control"></textarea>
+		</div>
 	</div>
 </div>
 <hr>
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-8 center-block">
 		<div *ngIf="app.errStatus === '404'" class="alert alert-info" role="alert">Not found</div>
-		<article class="panel panel-default" *ngFor="let note of app.notes">
-			<div class="panel-body">
-				<span class="note-name text-primary">{{ note.name }}</span>
-				<pre class="note-value"> {{ note.text }} </pre>
-				<span class="glyphicon glyphicon-remove pull-right" (click)="onDeleteClick(note._id)"></span>
-			</div>
-		</article>
+		<div class="list-item" *ngFor="let note of app.notes">
+			<pre class="note-value"> {{ note.text }} </pre>
+			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)">
+				<span class="glyphicon glyphicon-remove pull-right"></span>
+			</a>
+		</div>
 	</div>
 </div>
 <div class="row">
