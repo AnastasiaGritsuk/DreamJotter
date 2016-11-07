@@ -41,19 +41,29 @@ a.danger {
 
 .center-block {
     float: none;
+    text-align: center;
 }
 
 .btn-login {
     background-color: #24a1db;
     border-color: #057696;
-    width: 125px
+    width: 100%;
 }
 
 .page-header {
-    border-color: #24a1db;
+    border-color: #ffffff;
     color: #000000;
 }
 
 .h3 {
     color: #222222;
+}
+
+.well {
+    background-color: #FFCD00;
+}
+
+.login-img {
+    max-width: 50px;
+    margin-bottom: 20px;
 }

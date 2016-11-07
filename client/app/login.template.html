@@ -2,26 +2,33 @@
 	<div class="col-md-4 center-block">
 		<h1 class="page-header">Jotter</h1>
 		<h3>Keep your notes here!</h3>
-		<form #loginForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!_app.getLogged()">
-			<div>
-				<input class="form-control" type="text" id="username" placeholder="username"
-					ngControl="username"
-					[(ngModel)]="newUser.username"
-					required>
-			</div>
-			<div>
-				<input class="form-control" type="password" id="password" placeholder="password"
-					ngControl="password"
-					[(ngModel)]="newUser.password"
-					required>
-			</div>
-			<div class="login-service">
-				<button type="submit" class="btn btn-primary btn-login">Login</button>
-			</div>
-			<div *ngIf="_app.errStatus === '401' " class="alert alert-danger" role="alert">Incorrect login or password</div>
-		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4 center-block">
+		<div class="well">
+			<form #loginForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!_app.getLogged()">
+				<img src="img/logo.png" alt="..." class="login-img">
+				<div>
+					<input class="form-control" type="text" id="username" placeholder="username"
+						ngControl="username"
+						[(ngModel)]="newUser.username"
+						required>
+				</div>
+				<div>
+					<input class="form-control" type="password" id="password" placeholder="password"
+						ngControl="password"
+						[(ngModel)]="newUser.password"
+						required>
+				</div>
+				<div class="login-service">
+					<button type="submit" class="btn btn-primary btn-login">Login</button>
+				</div>
+				<div *ngIf="_app.errStatus === '401' " class="alert alert-danger" role="alert">Incorrect login or password</div>
+			</form>
+		</div>
 		<div class="panel panel-default" *ngIf="_app.getLogged()">
-			<div class="panel-heading"> 
+			<div class="panel-heading">
 				{{ newUser.username }}
 			</div>
 			<div class="panel-body">
