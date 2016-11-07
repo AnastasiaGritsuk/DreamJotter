@@ -1,4 +1,4 @@
-<div class="container">
-	<login></login>
+<div class="container-fluid">
+	<login *ngIf="!_app.getLogged()"></login>
 	<note-list *ngIf="_app.getLogged()"></note-list>
 </div>

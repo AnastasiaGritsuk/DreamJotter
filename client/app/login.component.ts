@@ -16,7 +16,5 @@ export class LoginComponent {
 		this._app.login(this.newUser.username, this.newUser.password);
 	}
 
-	onLogout() {
-		this._app.logout();
-	}
+	
 }

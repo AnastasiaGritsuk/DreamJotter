@@ -30,4 +30,8 @@ export class NoteListComponent implements OnInit{
 	onDeleteClick(id) {
 		this.app.remove(id);
 	}
+
+	onLogout() {
+		this.app.logout();
+	}
 }

@@ -1,17 +1,12 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
 a {
-  color: #00B7FF;
+  color: #000000;
   cursor: pointer;
 }
 
 a:hover,
 a:active {
-  color: #00B7FF;
-  text-decoration: underline;
+  color: #000000;
+  text-decoration: none;
 }
 
 a.danger {
@@ -48,11 +43,15 @@ a.danger {
     background-color: #24a1db;
     border-color: #057696;
     width: 100%;
+    color: #ffffff;
 }
 
 .page-header {
-    border-color: #ffffff;
     color: #000000;
+}
+
+h1 {
+    margin: 0;
 }
 
 .h3 {
@@ -63,7 +62,42 @@ a.danger {
     background-color: #FFCD00;
 }
 
-.login-img {
-    max-width: 50px;
+textarea.form-control {
+    resize: vertical;
+}
+
+.header {
+    background-color: #FFCD00;
+    padding: 20px;
     margin-bottom: 20px;
+}
+
+.logo {
+    display: inline-block;
+    color: #000000;
+}
+
+.logo img {
+    max-width: 35px;
+}
+
+.header .headline {
+    float: left;
+    font-size: 30px;
+    vertical-align: middle;
+}
+
+.header .service {
+    float: right;
+    height: 33px;
+    line-height: 33px;
+}
+
+.text {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.btn-primary {
+    width: 125px;
 }

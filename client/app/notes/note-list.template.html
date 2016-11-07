@@ -1,6 +1,23 @@
 <div class="row">
 	<div class="col-md-12">
-		<input [(ngModel)]="inputModel" type="text" class="form-control">
+		<header class="header clearfix">
+			<h1 class="headline">
+				<a href="" class="logo">
+					<img src="img/logo.png" alt="">
+					<span class="text">Jotter</span>
+				</a>
+			</h1>
+			<div class="service">
+				<a href="" (click) = "onLogout()" class="service-link">
+					<span class="text">Logout</span>
+				</a>
+			</div>
+		</header>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8 center-block">
+		<textarea [(ngModel)]="inputModel" row="1" type="text" class="form-control"></textarea>
 	</div>
 </div>
 <hr>
@@ -10,17 +27,17 @@
 		<article class="panel panel-default" *ngFor="let note of app.notes">
 			<div class="panel-body">
 				<span class="note-name text-primary">{{ note.name }}</span>
-				<span class="note-value"> {{ note.text }} id {{ note._id }}</span>
+				<pre class="note-value"> {{ note.text }} </pre>
 				<span class="glyphicon glyphicon-remove pull-right" (click)="onDeleteClick(note._id)"></span>
 			</div>
 		</article>
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-8 center-block">
 		<div class="btn-wrap">
 			<button (click)="onSaveClick(inputModel)"
-				type="button" class="btn btn-primary pull-left">Save</button>	
+				type="button" class="btn btn-primary pull-left">Save</button>
 			<button (click)="onFindClick(inputModel)" type="button" class="btn btn-primary">Find</button>
 		</div>
 	</div>
