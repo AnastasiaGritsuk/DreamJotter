@@ -21,6 +21,7 @@ export class NoteListComponent implements OnInit{
     	let note = {name:str.slice(0,pos), text:str.slice(pos+1) };
     	this.app.save(note);
 		this.inputModel = '';
+		this.app.notes = [];
     }
 
     onFindClick(key) {
