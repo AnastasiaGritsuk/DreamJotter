@@ -6,6 +6,7 @@ import { Note } from './notes/note.model';
 export class AppModel {
 	private securityToken: string = null;
 	public notes:Note[] = [];
+	public currentNoteName = null;
 	public errStatus: string = null;
 	
 	constructor(private svc:NoteService){}
@@ -55,6 +56,7 @@ export class AppModel {
 				notes => {
 					this.errStatus = null;
 					this.notes = notes;
+					this.currentNoteName = key;
 					console.log('find: end');
 				},
 				err => this.errStatus = err

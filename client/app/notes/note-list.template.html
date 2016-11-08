@@ -22,10 +22,10 @@
 		</div>
 	</div>
 </div>
-<hr>
 <div class="row">
 	<div class="col-md-8 center-block">
 		<div *ngIf="app.errStatus === '404'" class="alert alert-info" role="alert">Not found</div>
+		<h2 class="text-left">{{ app.currentNoteName }}</h2>
 		<div class="list-item" *ngFor="let note of app.notes">
 			<pre class="note-value"> {{ note.text }} </pre>
 			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)">

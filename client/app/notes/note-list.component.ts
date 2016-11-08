@@ -22,6 +22,7 @@ export class NoteListComponent implements OnInit{
     	this.app.save(note);
 		this.inputModel = '';
 		this.app.notes = [];
+		this.app.currentNoteName = null;
     }
 
     onFindClick(key) {
