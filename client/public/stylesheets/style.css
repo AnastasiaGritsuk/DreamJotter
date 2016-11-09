@@ -101,7 +101,6 @@ textarea.form-control {
 
 .btn-primary {
     width: 125px;
-    margin-right: 30px;
 }
 
 .note-value {
@@ -114,18 +113,24 @@ textarea.form-control {
 }
 
 .icon-edit,
-.icon-remove {
+.icon-remove,
+.icon-confirm {
     position: absolute;
     top: 0;
-    right: 8px;
+    right: 20px;
     margin-top: 11px;
     color: #337ab7;
 }
 
-.icon-edit {
-    right: 30px;
+.icon-edit,
+.icon-confirm {
+    right: 40px;
 }
 
 .service-link {
     color: #337ab7;
+}
+
+.form-control-group {
+    position: relative;
 }

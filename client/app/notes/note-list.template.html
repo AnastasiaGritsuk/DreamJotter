@@ -19,6 +19,13 @@
 	<div class="col-md-8 center-block">
 		<div class="form-control-group">
 			<textarea [(ngModel)]="inputModel" row="1" type="text" class="form-control"></textarea>
+			<a href="#" class="icon-confirm" (click) = "onEditCompleteClick(app.currentNote._id, inputModel)"
+			   *ngIf = "app.isEditMode">
+				<span class="glyphicon glyphicon-ok pull-right"></span>
+			</a>
+			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)" *ngIf = "app.isEditMode">
+				<span class="glyphicon glyphicon-remove pull-right"></span>
+			</a>
 		</div>
 	</div>
 </div>
@@ -28,7 +35,7 @@
 		<h2 class="text-left">{{ app.currentNoteName }}</h2>
 		<div class="list-item" *ngFor="let note of app.notes">
 			<pre class="note-value"> {{ note.text }} </pre>
-			<a href="#" class="icon-edit">
+			<a href="#" class="icon-edit" (click) = "onEditClick(note)">
 				<span class="glyphicon glyphicon-pencil pull-right"></span>
 			</a>
 			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)">

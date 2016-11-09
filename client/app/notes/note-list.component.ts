@@ -33,6 +33,16 @@ export class NoteListComponent implements OnInit{
 		this.app.remove(id);
 	}
 
+	onEditClick(note) {
+		this.app.currentNote = note;
+		this.app.isEditMode = true;
+		this.inputModel = note.text;
+	}
+
+	onEditCompleteClick(id, str) {
+		this.app.update(id, str);
+	}
+
 	onLogout() {
 		this.app.logout();
 	}

@@ -110,4 +110,27 @@ router.delete('/note/:id', function(req, res, next) {
         return res.status(401).send('Unauthorized');
 });
 
+router.put('/note/:id', function(req, res, next) {
+    console.log('xxx');
+    var token = req.headers.authorization;
+    var id = req.params.id;
+    var str = req.body.text;
+    console.log(str);
+    var user = userMap[token];
+
+    if(user) {
+        UserNote.findOneAndUpdate(id, {text: str}, function (err, doc) {
+            console.log('update ' + doc);
+            console.log('update err ' + err);
+
+            return res.status(200).json({
+                data: doc
+            });
+        });
+    } else
+        return res.status(401).send('Unauthorized');
+
+});
+
+
 module.exports = router;

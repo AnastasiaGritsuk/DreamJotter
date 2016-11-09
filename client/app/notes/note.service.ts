@@ -65,6 +65,19 @@ export class NoteService {
 			.catch(this.handleError);
     }
 
+	updateNote(id:string, str:string, token:string):Observable<any> {
+		let headers = new Headers({
+			'Content-Type': 'application/json',
+			'Authorization': token
+		});
+
+		var url = `/note/${id}`;
+		
+		return this.http.put(url, JSON.stringify({text:str}) , {headers: headers})
+			.map(this.extractData)
+			.catch(this.handleError);
+	}
+
 	private handleError(error:any) {
 		let errMsg = (error.message) ? error.message :
 			error.status ? `${error.status}` : 'Server error';
@@ -75,5 +88,7 @@ export class NoteService {
 		let body = res.json();
 		return body.data || { };
 	}
+	
+	
 
 }
