@@ -92,8 +92,8 @@ export class AppModel {
 			);
 	}
 	
-	update(id:string, str:string) {
-		return this.svc.updateNote(id, str, this.securityToken)
+	update(note:Note) {
+		return this.svc.updateNote(note, this.securityToken)
 			.subscribe(
 				note => {
 					this.errStatus = null;

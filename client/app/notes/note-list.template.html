@@ -19,7 +19,7 @@
 	<div class="col-md-8 center-block">
 		<div class="form-control-group">
 			<textarea [(ngModel)]="inputModel" row="1" type="text" class="form-control"></textarea>
-			<a href="#" class="icon-confirm" (click) = "onEditCompleteClick(app.currentNote._id, inputModel)"
+			<a href="#" class="icon-confirm" (click) = "onEditCompleteClick(app.currentNote, inputModel)"
 			   *ngIf = "app.isEditMode">
 				<span class="glyphicon glyphicon-ok pull-right"></span>
 			</a>

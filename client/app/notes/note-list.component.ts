@@ -39,8 +39,9 @@ export class NoteListComponent implements OnInit{
 		this.inputModel = note.text;
 	}
 
-	onEditCompleteClick(id, str) {
-		this.app.update(id, str);
+	onEditCompleteClick(note, str) {
+		note.text = str;
+		this.app.update(note);
 	}
 
 	onLogout() {
