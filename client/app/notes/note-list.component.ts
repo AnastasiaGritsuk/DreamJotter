@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AppModel } from "../app.model";
+import {TrimPipe} from "../trim";
 
 @Component({
 	moduleId: module.id,
 	selector: "note-list",
+	pipes: [TrimPipe],
 	templateUrl: 'note-list.template.html'
 })
 
