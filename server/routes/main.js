@@ -88,7 +88,6 @@ router.post('/note', function(req, res, next) {
         }
         return res.status(400).send('Invalid data');
     }
-
     return res.status(401).send('Unauthorized');
 });
 
@@ -113,26 +112,19 @@ router.delete('/note/:id', function(req, res, next) {
 router.put('/note', function(req, res, next) {
     console.log('xxx');
     var token = req.headers.authorization;
-    var name = req.body.name;
+    var id = req.body._id;
     var text = req.body.text;
-    console.log(name + text);
     var user = userMap[token];
 
-    console.log('sent id ' + req.body._id);
-
     if(user) {
-        UserNote.findOneAndUpdate(req.body._id, {name: name, text:text}, {upsert: true, new: true}, function (err, doc) {
+        UserNote.findOneAndUpdate({_id : id },  { $set: { "text" : text } }, {new: true}, function (err, doc) {
             console.log('update ' + doc);
             console.log('update err ' + err);
 
-            return res.status(200).json({
-                data: doc
-            });
+            return res.status(200).send('Note has been updated');
         });
     } else
         return res.status(401).send('Unauthorized');
-
 });
-
 
 module.exports = router;

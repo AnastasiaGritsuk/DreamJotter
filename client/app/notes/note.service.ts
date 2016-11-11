@@ -87,7 +87,4 @@ export class NoteService {
 		let body = res.json();
 		return body.data || { };
 	}
-	
-	
-
 }

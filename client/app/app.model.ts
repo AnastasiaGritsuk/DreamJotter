@@ -8,8 +8,6 @@ export class AppModel {
 	public notes:Note[] = [];
 	public currentNoteName = null;
 	public isNoteDeleted = false;
-	public isEditMode = false;
-	public currentNote = null;
 	public errStatus: string = null;
 	
 	constructor(private svc:NoteService){}
@@ -97,11 +95,6 @@ export class AppModel {
 			.subscribe(
 				note => {
 					this.errStatus = null;
-					let updatedItem = this.notes.find(function(x:any) {
-						return x._id === note._id;
-					});
-
-					updatedItem.text = note.text;
 					console.log('update: end');
 				},
 				err => this.errStatus = err

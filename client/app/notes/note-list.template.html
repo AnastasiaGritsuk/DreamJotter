@@ -34,10 +34,7 @@
 		<div *ngIf="app.errStatus === '404'" class="alert alert-info" role="alert">Not found</div>
 		<h2 class="text-left">{{ app.currentNoteName }}</h2>
 		<div class="list-item" *ngFor="let note of app.notes">
-			<pre class="note-value"> {{ note.text }} </pre>
-			<a href="#" class="icon-edit" (click) = "onEditClick(note)">
-				<span class="glyphicon glyphicon-pencil pull-right"></span>
-			</a>
+			<pre class="note-value" #noteText contenteditable="true" (blur)="onEditCompleteClick(note, noteText)" > {{ note.text }} </pre>
 			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)">
 				<span class="glyphicon glyphicon-remove pull-right"></span>
 			</a>

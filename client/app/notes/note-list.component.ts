@@ -9,7 +9,7 @@ import { AppModel } from "../app.model";
 
 export class NoteListComponent implements OnInit{
 	public inputModel;
-	
+	public noteText;
 	constructor(public app: AppModel) {}
 
 	ngOnInit() {
@@ -33,14 +33,8 @@ export class NoteListComponent implements OnInit{
 		this.app.remove(id);
 	}
 
-	onEditClick(note) {
-		this.app.currentNote = note;
-		this.app.isEditMode = true;
-		this.inputModel = note.text;
-	}
-
-	onEditCompleteClick(note, str) {
-		note.text = str;
+	onEditCompleteClick(note, noteText) {
+		note.text= noteText.innerText;
 		this.app.update(note);
 	}
 
