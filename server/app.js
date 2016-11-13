@@ -37,7 +37,7 @@ app.use('/admin', adminRoute);
 
 // error handlers
 
-app.use(function (req, res, next) {
+app.get('*', function (req, res, next) {
     var err = new Error('Not found');
     err.status = 404;
     next(err);
