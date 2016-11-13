@@ -135,10 +135,13 @@ textarea.form-control {
     position: relative;
 }
 
-.alert {
+.alerts_wrap{
     position: absolute;
     bottom: 0;
     right: 10px;
+}
+
+.alert {
     opacity: 1;
     transition:opacity 0.5s linear;
 }

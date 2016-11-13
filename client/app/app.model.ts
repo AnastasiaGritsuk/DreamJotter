@@ -6,8 +6,8 @@ import { Note } from './notes/note.model';
 export class AppModel {
 	private securityToken: string = null;
 	public notes:Note[] = [];
+	public alerts = [];
 	public currentNoteName = null;
-	public isNoteDeleted = false;
 	public errStatus: string = null;
 	
 	constructor(private svc:NoteService){}
@@ -76,11 +76,7 @@ export class AppModel {
 
 					if (index > -1) {
 						this.notes.splice(index, 1);
-						this.isNoteDeleted = true;
-						setTimeout(function () {
-							console.log('settimeout');
-							this.isNoteDeleted = false;
-						}, 2000);
+						this.alerts.push(note);
 						console.log('remove: end');
 						return;
 					}

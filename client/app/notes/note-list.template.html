@@ -51,4 +51,7 @@
 	</div>
 </div>
 
-<div *ngIf="app.isNoteDeleted" hideAlert class="alert alert-info">Note had been deleted</div>
+<div class="alerts_wrap">
+	<div *ngFor="let alert of app.alerts" hideAlert class="alert alert-info">Note had been deleted</div>
+</div>
+
