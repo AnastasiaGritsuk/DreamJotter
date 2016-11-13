@@ -134,3 +134,16 @@ textarea.form-control {
 .form-control-group {
     position: relative;
 }
+
+.alert {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    opacity: 1;
+    transition:opacity 0.5s linear;
+}
+
+.alert.active {
+    opacity: 0;
+}
+

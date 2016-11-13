@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AppModel } from "../app.model";
 import {TrimPipe} from "../trim";
+import { HideAlertDirective } from './hideAlert.directive';
 
 @Component({
 	moduleId: module.id,
 	selector: "note-list",
 	pipes: [TrimPipe],
+	directives: [HideAlertDirective],
 	templateUrl: 'note-list.template.html'
 })
 
