@@ -12,7 +12,7 @@ import { HideAlertDirective } from './hideAlert.directive';
 })
 
 export class NoteListComponent implements OnInit{
-	public inputModel;
+	public inputModel = '';
 	public noteText;
 	constructor(public app: AppModel) {}
 

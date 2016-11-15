@@ -45,8 +45,8 @@
 	<div class="col-md-8 center-block">
 		<div class="btn-wrap">
 			<button (click)="onSaveClick(inputModel)"
-				type="button" class="btn btn-primary pull-left">Save</button>
-			<button (click)="onFindClick(inputModel)" type="button" class="btn btn-primary">Find</button>
+				type="button" class="btn btn-primary pull-left" [disabled]=" inputModel === ''" >Save</button>
+			<button (click)="onFindClick(inputModel)" type="button" class="btn btn-primary" [disabled]=" inputModel === ''">Find</button>
 		</div>
 	</div>
 </div>
