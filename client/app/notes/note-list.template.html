@@ -34,7 +34,7 @@
 		<div *ngIf="app.errStatus === '404'" class="alert alert-info" role="alert">Not found</div>
 		<h2 class="text-left">{{ app.currentNoteName }}</h2>
 		<div class="list-item" *ngFor="let note of app.notes">
-			<pre class="note-value" #noteText contenteditable="true" (blur)="onEditCompleteClick(note, noteText)" > {{ note.text | trim }} </pre>
+			<pre class="note-value" #noteText contenteditable="true" (blur)="onEditCompleteClick(note, noteText)"> {{ note.text | trim }} </pre>
 			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)">
 				<span class="glyphicon glyphicon-remove pull-right"></span>
 			</a>
@@ -45,13 +45,13 @@
 	<div class="col-md-8 center-block">
 		<div class="btn-wrap">
 			<button (click)="onSaveClick(inputModel)"
-				type="button" class="btn btn-primary pull-left" [disabled]=" inputModel === ''" >Save</button>
-			<button (click)="onFindClick(inputModel)" type="button" class="btn btn-primary" [disabled]=" inputModel === ''">Find</button>
+				type="button" class="btn btn-primary pull-left" [disabled]="inputModel === ''" >Save</button>
+			<button (click)="onFindClick(inputModel)" type="button" class="btn btn-primary" [disabled]="inputModel === ''">Find</button>
 		</div>
 	</div>
 </div>
 
 <div class="alerts_wrap">
-	<div *ngFor="let alert of app.alerts" hideAlert class="alert alert-info">Note had been deleted</div>
+	<div *ngFor="let alert of app.alerts" [ngClass]="{'alert-info': alert.type === 'info','alert-danger': alert.type === 'danger'}" hideAlert class="alert">{{alert.disc}}</div>
 </div>
 

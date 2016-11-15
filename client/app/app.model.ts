@@ -76,7 +76,7 @@ export class AppModel {
 
 					if (index > -1) {
 						this.notes.splice(index, 1);
-						this.alerts.push(note);
+						this.alerts.push({type:'info', disc: 'Note had been deleted'});
 						console.log('remove: end');
 						return;
 					}
