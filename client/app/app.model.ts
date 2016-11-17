@@ -7,6 +7,7 @@ export class AppModel {
 	private securityToken: string = null;
 	public notes:Note[] = [];
 	public alerts = [];
+	public errors = [];
 	public currentNoteName = null;
 	public errStatus: string = null;
 	
@@ -44,8 +45,7 @@ export class AppModel {
 		
 		return this.svc.insertNote(note, this.securityToken)
 			.subscribe(
-				()=> console.log('save: end'),
-				err => this.errStatus = err
+				()=> console.log('save: end')
 			);
 	}
 	
@@ -60,7 +60,9 @@ export class AppModel {
 					this.currentNoteName = key;
 					console.log('find: end');
 				},
-				err => this.errStatus = err
+				err => {
+					console.log(err);
+				}
 			);
 	}
 

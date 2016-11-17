@@ -48,7 +48,6 @@ router.delete('/auth', function(req, res, next) {
 router.get('/note/:key', function(req, res, next) {
     var token = req.headers.authorization;
     var key = req.params.key;
-    console.log('key ' + key);
     var result = [];
     var user = userMap[token];
 
@@ -64,7 +63,6 @@ router.get('/note/:key', function(req, res, next) {
                     data: result
                 });
             }
-            return res.status(404).send('Not found');
         });
     } else
         return res.status(401).send('Unauthorized');

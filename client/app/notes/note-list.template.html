@@ -31,8 +31,13 @@
 </div>
 <div class="row">
 	<div class="col-md-8 center-block">
-		<div *ngIf="app.errStatus === '404'" class="alert alert-info" role="alert">Not found</div>
+		<div class="errors_wrap">
+			<div *ngFor="let error of app.errors" [ngClass]="{'alert-info': error.type === 'info','alert-danger': error.type === 'danger'}" class="alert">
+				<a href="#" class="close" aria-label="close" title="close" (click)="onCloseErrorAlert">×</a>
+				{{error.disc}}</div>
+		</div>
 		<h2 class="text-left">{{ app.currentNoteName }}</h2>
+		<span *ngIf = "app.notes.length === 0">Not found</span>
 		<div class="list-item" *ngFor="let note of app.notes">
 			<pre class="note-value" #noteText contenteditable="true" (blur)="onEditCompleteClick(note, noteText)"> {{ note.text | trim }} </pre>
 			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)">

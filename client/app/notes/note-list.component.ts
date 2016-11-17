@@ -23,8 +23,8 @@ export class NoteListComponent implements OnInit{
 	onSaveClick(str) {
     	let pos = str.indexOf(" ");
     	let note = {name:str.slice(0,pos), text:str.slice(pos+1).trim()};
-		if(note.text === '') {
-			this.app.alerts.push({type:'danger', disc: 'Data ..'})
+		if(note.text === '' || pos == -1) {
+			this.app.errors.push({type:'danger', disc: 'Incorrect data format'});
 			return;
 		}
     	this.app.save(note);
@@ -48,5 +48,9 @@ export class NoteListComponent implements OnInit{
 
 	onLogout() {
 		this.app.logout();
+	}
+
+	onCloseErrorAlert() {
+	
 	}
 }
