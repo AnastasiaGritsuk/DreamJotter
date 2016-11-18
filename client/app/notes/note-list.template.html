@@ -36,8 +36,8 @@
 				<a href="#" class="close" aria-label="close" title="close" (click)="onCloseErrorAlert">×</a>
 				{{error.disc}}</div>
 		</div>
-		<h2 class="text-left">{{ app.currentNoteName }}</h2>
-		<span *ngIf = "app.notes.length === 0">Not found</span>
+		<h2 *ngIf = "app.currentNote" class="text-left">{{ app.currentNote.name }}</h2>
+		<span *ngIf = "app.currentNote">{{ app.currentNote.status }}</span>
 		<div class="list-item" *ngFor="let note of app.notes">
 			<pre class="note-value" #noteText contenteditable="true" (blur)="onEditCompleteClick(note, noteText)"> {{ note.text | trim }} </pre>
 			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)">

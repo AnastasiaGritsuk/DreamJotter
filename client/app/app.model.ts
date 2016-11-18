@@ -9,6 +9,7 @@ export class AppModel {
 	public alerts = [];
 	public errors = [];
 	public currentNoteName = null;
+	public currentNote = null;
 	public errStatus: string = null;
 	
 	constructor(private svc:NoteService){}
@@ -45,7 +46,10 @@ export class AppModel {
 		
 		return this.svc.insertNote(note, this.securityToken)
 			.subscribe(
-				()=> console.log('save: end')
+				()=> {
+					this.currentNote = null;
+					console.log('save: end');
+				}
 			);
 	}
 	
@@ -55,9 +59,14 @@ export class AppModel {
 		return this.svc.getNotes(key, this.securityToken)
 			.subscribe(
 				notes => {
+					this.currentNote = {};
+					if(notes.length === 0) {
+						this.currentNote.status = 'not found';
+					}
+					this.currentNote.name = key;
 					this.errStatus = null;
 					this.notes = notes;
-					this.currentNoteName = key;
+
 					console.log('find: end');
 				},
 				err => {

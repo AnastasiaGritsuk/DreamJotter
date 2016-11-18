@@ -54,15 +54,15 @@ router.get('/note/:key', function(req, res, next) {
     if(user) {
         UserNote.find({user: user, name: key}, function (err, doc) {
             if(err) throw  err;
-            if(doc.length !== 0) {
-                doc.forEach(function (note) {
-                    result.push(note);
-                });
+            
+            doc.forEach(function (note) {
+                result.push(note);
+            });
 
-                return res.status(200).json({
-                    data: result
-                });
-            }
+            return res.status(200).json({
+                data: result
+            });
+
         });
     } else
         return res.status(401).send('Unauthorized');
