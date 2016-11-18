@@ -32,9 +32,9 @@
 <div class="row">
 	<div class="col-md-8 center-block">
 		<div class="errors_wrap">
-			<div *ngFor="let error of app.errors" [ngClass]="{'alert-info': error.type === 'info','alert-danger': error.type === 'danger'}" class="alert">
-				<a href="#" class="close" aria-label="close" title="close" (click)="onCloseErrorAlert">×</a>
-				{{error.disc}}</div>
+			<div *ngIf="isError" [ngClass]="{'active':isClosedAlert}" class="alert alert-danger">
+				<a href="#" class="close" (click)="onCloseErrorAlert()">×</a>
+				{{app.error.disc}}</div>
 		</div>
 		<h2 *ngIf = "app.currentNote" class="text-left">{{ app.currentNote.name }}</h2>
 		<span *ngIf = "app.currentNote">{{ app.currentNote.status }}</span>

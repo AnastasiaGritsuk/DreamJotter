@@ -14,6 +14,7 @@ import { HideAlertDirective } from './hideAlert.directive';
 export class NoteListComponent implements OnInit{
 	public inputModel = '';
 	public noteText;
+	public isError = false;
 	constructor(public app: AppModel) {}
 
 	ngOnInit() {
@@ -24,7 +25,7 @@ export class NoteListComponent implements OnInit{
     	let pos = str.indexOf(" ");
     	let note = {name:str.slice(0,pos), text:str.slice(pos+1).trim()};
 		if(note.text === '' || pos == -1) {
-			this.app.errors.push({type:'danger', disc: 'Incorrect data format'});
+			this.app.error = {type:'danger', disc: 'Incorrect data format'};
 			return;
 		}
     	this.app.save(note);
@@ -51,6 +52,6 @@ export class NoteListComponent implements OnInit{
 	}
 
 	onCloseErrorAlert() {
-	
+		this.isError = true;
 	}
 }

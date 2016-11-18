@@ -7,7 +7,7 @@ export class AppModel {
 	private securityToken: string = null;
 	public notes:Note[] = [];
 	public alerts = [];
-	public errors = [];
+	public error = null;
 	public currentNoteName = null;
 	public currentNote = null;
 	public errStatus: string = null;
