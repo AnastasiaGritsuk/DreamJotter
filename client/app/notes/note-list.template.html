@@ -35,7 +35,7 @@
 		<h2 *ngIf = "app.currentNote" class="text-left">{{ app.currentNote.name }}</h2>
 		<span *ngIf = "app.currentNote">{{ app.currentNote.status }}</span>
 		<div class="list-item" *ngFor="let note of app.notes">
-			<pre class="note-value" #noteText contenteditable="true" (blur)="onEditCompleteClick(note, noteText)" (click)="onSelectNoteItem(note)"> {{ note.text | trim }} </pre>
+			<pre class="note-value" #noteText contenteditable="true" (blur)="onEditCompleteClick(note, noteText)"> {{ note.text | trim }} </pre>
 			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)">
 				<span class="glyphicon glyphicon-remove pull-right"></span>
 			</a>

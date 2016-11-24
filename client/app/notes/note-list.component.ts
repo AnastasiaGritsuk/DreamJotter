@@ -45,8 +45,7 @@ export class NoteListComponent implements OnInit{
 
 	onEditCompleteClick(note, noteText) {
 		if(noteText.innerText.trim() === '') {
-			this.app.error = {disc: 'note content can not be blank'};
-			note.text
+			this.onDeleteClick(note._id);
 			return;
 		}
 		note.text= noteText.innerText;
