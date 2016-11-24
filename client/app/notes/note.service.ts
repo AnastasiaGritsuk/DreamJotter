@@ -34,7 +34,9 @@ export class NoteService {
 			'Content-Type': 'application/json',
 			'Authorization': token
 		});
-		return this.http.post('/note', body, {headers: headers});
+		return this.http.post('/note', body, {headers: headers})
+			.map(this.extractData)
+			.catch(this.handleError);
 	}
 
 	getNotes(key:string, token:string): Observable<Note[]> {
@@ -77,9 +79,10 @@ export class NoteService {
 			.catch(this.handleError);
 	}
 
-	private handleError(error:any) {
-		let errMsg = (error.message) ? error.message :
-			error.status ? `${error.status}` : 'Server error';
+	private handleError(error: Response) {
+		let errMsg = error.json();
+		errMsg = (errMsg.message) ? errMsg.message :
+			errMsg.status ? `${errMsg.status}` : 'Server error';
 		return Observable.throw(errMsg);
 	}
 

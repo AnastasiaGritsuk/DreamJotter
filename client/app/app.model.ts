@@ -10,7 +10,6 @@ export class AppModel {
 	public error = null;
 	public currentNoteName = null;
 	public currentNote = null;
-	public errStatus: string = null;
 	
 	constructor(private svc:NoteService){}
 
@@ -23,7 +22,7 @@ export class AppModel {
 					this.securityToken = token;
 					console.log('login: end');
 				},
-				err => this.errStatus = err
+				err => this.error = {disc: err}
 			);
 	}
 
@@ -34,10 +33,10 @@ export class AppModel {
 			.subscribe(
 				() => {
 					this.securityToken = null;
-					this.errStatus = null;
+					this.error = null;
 					console.log('logout: end');
 				},
-				err => this.errStatus = err
+				err => this.error = {disc: err}
 			);
 	};
 
@@ -49,7 +48,8 @@ export class AppModel {
 				()=> {
 					this.currentNote = null;
 					console.log('save: end');
-				}
+				},
+				err => this.error = {disc: err}
 			);
 	}
 	
@@ -64,14 +64,12 @@ export class AppModel {
 						this.currentNote.status = 'not found';
 					}
 					this.currentNote.name = key;
-					this.errStatus = null;
+					this.error = null;
 					this.notes = notes;
 
 					console.log('find: end');
 				},
-				err => {
-					console.log(err);
-				}
+				err => this.error = {disc: err}
 			);
 	}
 
@@ -79,7 +77,7 @@ export class AppModel {
 		return this.svc.removeNote(id, this.securityToken)
 			.subscribe(
 				note => {
-					this.errStatus = null;
+					this.error = null;
 					let deletedItem = this.notes.find(function(x:any) {
 						return x._id === note._id;
 					});
@@ -93,7 +91,7 @@ export class AppModel {
 					}
 					console.log('remove: something went wrong');
 				},
-				err => this.errStatus = err
+				err => this.error = {disc: err}
 			);
 	}
 	
@@ -101,10 +99,10 @@ export class AppModel {
 		return this.svc.updateNote(note, this.securityToken)
 			.subscribe(
 				note => {
-					this.errStatus = null;
+					this.error = null;
 					console.log('update: end');
 				},
-				err => this.errStatus = err
+				err => this.error = {disc: err}
 			);
 	}
 

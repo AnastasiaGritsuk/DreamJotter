@@ -14,7 +14,6 @@ import { HideAlertDirective } from './hideAlert.directive';
 export class NoteListComponent implements OnInit{
 	public inputModel = '';
 	public noteText;
-	public isError = false;
 	constructor(public app: AppModel) {}
 
 	ngOnInit() {
@@ -30,11 +29,13 @@ export class NoteListComponent implements OnInit{
 		}
     	this.app.save(note);
 		this.inputModel = '';
+		this.app.error = null;
 		this.app.notes = [];
 		this.app.currentNoteName = null;
     }
 
     onFindClick(key) {
+		this.app.error = null;
 		this.app.find(key);
     }
 
@@ -52,6 +53,6 @@ export class NoteListComponent implements OnInit{
 	}
 
 	onCloseErrorAlert() {
-		this.isError = true;
+		this.app.error = null;
 	}
 }

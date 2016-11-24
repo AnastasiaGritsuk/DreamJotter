@@ -41,7 +41,9 @@ router.delete('/auth', function(req, res, next) {
 
     if(userMap[token])
         return res.status(200).send('Logout successful');
-    return res.status(401).send('Unauthorized');
+    return res.status(400).json({
+        message: 'Unauthorized'
+    });
 });
 
 
@@ -65,7 +67,9 @@ router.get('/note/:key', function(req, res, next) {
 
         });
     } else
-        return res.status(401).send('Unauthorized');
+        return res.status(400).json({
+            message: 'Unauthorized'
+        });
 });
 
 router.post('/note', function(req, res, next) {
@@ -82,11 +86,17 @@ router.post('/note', function(req, res, next) {
             var userNote = new UserNote(note);
             userNote.save();
 
-            return res.status(200).send('Note has been saved');
+            return res.status(200).json({
+                message: 'Note has been saved'
+            });
         }
-        return res.status(400).send('Invalid data');
+        return res.status(400).json({
+            message: 'Invalid data'
+        });
     }
-    return res.status(401).send('Unauthorized');
+    return res.status(400).json({
+        message: 'Unauthorized'
+    });
 });
 
 router.delete('/note/:id', function(req, res, next) {
@@ -96,6 +106,7 @@ router.delete('/note/:id', function(req, res, next) {
 
     if(user) {
         UserNote.findByIdAndRemove(id,function (err, doc) {
+            if(err) throw  err;
             console.log('remove ' + doc);
             console.log('remove err ' + err);
 
@@ -104,7 +115,9 @@ router.delete('/note/:id', function(req, res, next) {
             });
         });
     } else
-        return res.status(401).send('Unauthorized');
+        return res.status(400).json({
+            message: 'Unauthorized'
+        });
 });
 
 router.put('/note', function(req, res, next) {
@@ -122,7 +135,9 @@ router.put('/note', function(req, res, next) {
             return res.status(200).send('Note has been updated');
         });
     } else
-        return res.status(401).send('Unauthorized');
+        return res.status(400).json({
+            message: 'Unauthorized'
+        });
 });
 
 module.exports = router;
