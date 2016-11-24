@@ -24,7 +24,7 @@ export class NoteListComponent implements OnInit{
     	let pos = str.indexOf(" ");
     	let note = {name:str.slice(0,pos), text:str.slice(pos+1).trim()};
 		if(note.text === '' || pos == -1) {
-			this.app.error = {type:'danger', disc: 'Incorrect data format'};
+			this.app.error = {disc: 'Incorrect data format'};
 			return;
 		}
     	this.app.save(note);
@@ -44,6 +44,11 @@ export class NoteListComponent implements OnInit{
 	}
 
 	onEditCompleteClick(note, noteText) {
+		if(noteText.innerText.trim() === '') {
+			this.app.error = {disc: 'note content can not be blank'};
+			note.text
+			return;
+		}
 		note.text= noteText.innerText;
 		this.app.update(note);
 	}
