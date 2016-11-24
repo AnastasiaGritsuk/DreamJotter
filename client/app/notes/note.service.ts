@@ -73,7 +73,6 @@ export class NoteService {
 			'Authorization': token
 		});
 		
-		console.log('sent note '+note);
 		return this.http.put('/note', JSON.stringify(note) , {headers: headers})
 			.map(this.extractData)
 			.catch(this.handleError);

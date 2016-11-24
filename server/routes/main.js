@@ -121,7 +121,6 @@ router.delete('/note/:id', function(req, res, next) {
 });
 
 router.put('/note', function(req, res, next) {
-    console.log('xxx');
     var token = req.headers.authorization;
     var id = req.body._id;
     var text = req.body.text;
@@ -129,10 +128,10 @@ router.put('/note', function(req, res, next) {
 
     if(user) {
         UserNote.findOneAndUpdate({_id : id },  { $set: { "text" : text } }, {new: true}, function (err, doc) {
-            console.log('update ' + doc);
-            console.log('update err ' + err);
-
-            return res.status(200).send('Note has been updated');
+            if(err) throw  err;
+            return res.status(200).json({
+                data: doc
+            });
         });
     } else
         return res.status(400).json({
