@@ -32,7 +32,9 @@ router.post('/auth', function(req, res, next) {
                 });
             }
         }
-        return res.status(401).send('Unauthorized');
+        return res.status(401).json({
+            message: 'Incorrect login or password'
+        });
     });
 });
 
@@ -40,8 +42,10 @@ router.delete('/auth', function(req, res, next) {
     var token = req.headers.authorization;
 
     if(userMap[token])
-        return res.status(200).send('Logout successful');
-    return res.status(400).json({
+        return res.status(200).json({
+            data: {}
+        });
+    return res.status(401).json({
         message: 'Unauthorized'
     });
 });
@@ -67,7 +71,7 @@ router.get('/note/:key', function(req, res, next) {
 
         });
     } else
-        return res.status(400).json({
+        return res.status(401).json({
             message: 'Unauthorized'
         });
 });
@@ -94,7 +98,7 @@ router.post('/note', function(req, res, next) {
             message: 'Invalid data'
         });
     }
-    return res.status(400).json({
+    return res.status(401).json({
         message: 'Unauthorized'
     });
 });
@@ -115,7 +119,7 @@ router.delete('/note/:id', function(req, res, next) {
             });
         });
     } else
-        return res.status(400).json({
+        return res.status(401).json({
             message: 'Unauthorized'
         });
 });
@@ -134,7 +138,7 @@ router.put('/note', function(req, res, next) {
             });
         });
     } else
-        return res.status(400).json({
+        return res.status(401).json({
             message: 'Unauthorized'
         });
 });

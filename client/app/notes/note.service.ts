@@ -26,6 +26,8 @@ export class NoteService {
 		});
 
 		return this.http.delete('/auth', {headers: headers})
+			.map(this.extractData)
+			.catch(this.handleError);
 	}
 
 	insertNote(note: Note, token:string): Observable<any> {

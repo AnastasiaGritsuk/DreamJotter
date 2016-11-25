@@ -8,7 +8,6 @@ export class AppModel {
 	public notes:Note[] = [];
 	public alerts = [];
 	public error = null;
-	public currentNoteName = null;
 	public currentNote = null;
 	
 	constructor(private svc:NoteService){}
@@ -34,6 +33,8 @@ export class AppModel {
 				() => {
 					this.securityToken = null;
 					this.error = null;
+					this.alerts = null;
+					this.currentNote = null;
 					console.log('logout: end');
 				},
 				err => this.error = {disc: err}
@@ -85,7 +86,7 @@ export class AppModel {
 
 					if (index > -1) {
 						this.notes.splice(index, 1);
-						this.alerts.push({type:'info', disc: 'Note had been deleted'});
+						this.alerts.push({disc: 'Note had been deleted'});
 						console.log('remove: end');
 						return;
 					}

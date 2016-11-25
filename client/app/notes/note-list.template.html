@@ -53,6 +53,6 @@
 </div>
 
 <div class="alerts_wrap">
-	<div *ngFor="let alert of app.alerts" [ngClass]="{'alert-info': alert.type === 'info','alert-danger': alert.type === 'danger'}" hideAlert class="alert">{{alert.disc}}</div>
+	<div *ngFor="let alert of app.alerts" hideAlert class="alert alert-info">{{alert.disc}}</div>
 </div>
 

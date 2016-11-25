@@ -31,7 +31,7 @@ export class NoteListComponent implements OnInit{
 		this.inputModel = '';
 		this.app.error = null;
 		this.app.notes = [];
-		this.app.currentNoteName = null;
+		this.app.currentNote = null;
     }
 
     onFindClick(key) {

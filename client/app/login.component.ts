@@ -8,13 +8,12 @@ import { AppModel} from './app.model';
 })
 
 export class LoginComponent {
-	constructor(private _app: AppModel) {}
+	constructor(private app: AppModel) {}
 
 	newUser = {username:'', password:''};
 
 	onSubmit() {
-		this._app.login(this.newUser.username, this.newUser.password);
+		this.app.error = null;
+		this.app.login(this.newUser.username, this.newUser.password);
 	}
-
-	
 }
