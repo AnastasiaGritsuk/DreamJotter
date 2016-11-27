@@ -26,8 +26,8 @@ router.post('/auth', function(req, res, next) {
         }
         console.log(doc);
         if(doc) {
-            if(doc.password === password) {
-                console.log('pwd doc' + doc.password);
+            if(doc.authenticate(password)) {
+                console.log('pwd doc');
 
                 userMap[token] = username;
                 doc.save();
