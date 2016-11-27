@@ -16,14 +16,19 @@ router.post('/auth', function(req, res, next) {
     var creds = basicAuthParser(req.headers.authorization);
     var username = creds.username;
     var password = creds.password;
+
+    console.log('pwd ' + password);
     
     User.findOne({username: username}, function (err, doc) {
         if(err) {
             console.log('unhandled error');
             throw  err;
         }
+        console.log(doc);
         if(doc) {
             if(doc.password === password) {
+                console.log('pwd doc' + doc.password);
+
                 userMap[token] = username;
                 doc.save();
 
