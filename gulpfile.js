@@ -111,22 +111,23 @@ gulp.task('watch', function () {
 });
 
 gulp.task('mongostart', function() {
-    var mongod = new run.Command('start mongod --dbpath D:/mongo');
-    mongod.exec(function () {
-        mongoose.connection.on('connected', function () {
-            console.log('Mongoose default connection open to ' + db);
-        });
+    return run('start mongod --dbpath D:/mongo').exec(function () {
+        setTimeout(function () {
+            mongoose.connection.on('connected', function () {
+                console.log('Mongoose default connection open to ' + db);
+            });
 
-        mongoose.connection.on('error',function (err) {
-            console.log('Mongoose default connection error: ' + err);
-        });
+            mongoose.connection.on('error',function (err) {
+                console.log('Mongoose default connection error: ' + err);
+            });
 
-        mongoose.connect(db, function (error) {
-            console.log('connect ' + db);
-            if(error)
-                throw error;
-            createUser();
-        });
+            mongoose.connect(db, function (error) {
+                console.log('connect ' + db);
+                if(error)
+                    throw error;
+                createUser();
+            });
+        }, 1000);
     });
 });
 
