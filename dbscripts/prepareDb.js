@@ -1,15 +1,12 @@
-var DefaultUser = require('../server/models/user');
+var User = require('../server/models/user');
 
 function createUser() {
-    DefaultUser.count(function (err, count) {
+    User.count(function (err, count) {
         if (!err && count === 0) {
-            var user = {
-                username: 'admin',
-                password: 'admin'
-            }
-
-            var user = new DefaultUser(user);
-            user.save();
+            var user = new User({username: 'admin', password: 'admin'});
+            user.save(function (err, doc) {
+                console.log(err);
+            });
         }
     });
 }
