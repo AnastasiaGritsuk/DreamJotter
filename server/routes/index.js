@@ -19,7 +19,6 @@ router.post('/auth', function(req, res, next) {
     
     User.findOne({username: username}, function (err, doc) {
         if(err) {
-            console.log('unhandled error');
             throw  err;
         }
         if(doc) {
@@ -49,7 +48,6 @@ router.delete('/auth', function(req, res, next) {
     });
 });
 
-
 router.get('/note/:key', function(req, res, next) {
     var token = req.headers.authorization;
     var key = req.params.key;
@@ -67,7 +65,6 @@ router.get('/note/:key', function(req, res, next) {
             return res.status(200).json({
                 data: result
             });
-
         });
     } else
         return res.status(401).json({
@@ -77,12 +74,11 @@ router.get('/note/:key', function(req, res, next) {
 
 router.post('/note', function(req, res, next) {
     var token = req.headers.authorization;
-    console.log('server token ' + token);
     var note = {};
     note.name = req.body.name;
     note.text = req.body.text;
-    
     var user = userMap[token];
+    
     if(user) {
         if(note.name !== '' && note.text !== ''){
             note.user = user;
@@ -110,9 +106,6 @@ router.delete('/note/:id', function(req, res, next) {
     if(user) {
         UserNote.findByIdAndRemove(id,function (err, doc) {
             if(err) throw  err;
-            console.log('remove ' + doc);
-            console.log('remove err ' + err);
-
             return res.status(200).json({
                 data: doc
             });
