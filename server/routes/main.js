@@ -18,15 +18,18 @@ router.post('/auth', function(req, res, next) {
     var password = creds.password;
 
     console.log('pwd ' + password);
+
+    var newuser = new User({username:username, password: password});
     
-    User.findOne({username: username}, function (err, doc) {
+    User.findOne({username: newuser.username}, function (err, doc) {
         if(err) {
             console.log('unhandled error');
             throw  err;
         }
         console.log(doc);
+        console.log('hash for pwd' + doc.encryptPassword(password));
         if(doc) {
-            if(doc.authenticate(password)) {
+            if(doc.password === doc.encryptPassword(password)) {
                 console.log('pwd doc');
 
                 userMap[token] = username;
