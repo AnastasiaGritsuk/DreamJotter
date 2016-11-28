@@ -6,7 +6,7 @@ var appProd = 'client/public/js/app/';
 var vendor = 'client/public/js/vendor';
 var mongoose = require('mongoose');
 var db = require('./config').db;
-var createUser = require('./dbscripts/prepareDb');
+var createUser = require('./dbscripts/createUser');
 
 /* JS & TS */
 var typescript = require('gulp-typescript');
@@ -100,7 +100,7 @@ gulp.task('dist', function () {
     gulp.src('typings.d.ts')
         .pipe(gulp.dest('../dist'));
     
-    return gulp.src('server/main.js')
+    return gulp.src('server/index.js')
         .pipe(gulp.dest('../dist/server'));
 
 });

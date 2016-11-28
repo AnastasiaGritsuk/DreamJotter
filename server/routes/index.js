@@ -5,7 +5,7 @@ var UserNote = require('../models/note');
 var User = require('../models/user');
 var Uuid = require('node-uuid');
 
-var userMap = {}
+var userMap = {};
 
 router.get('/', function(req, res, next) {
     res.render('index');
