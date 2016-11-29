@@ -8,7 +8,10 @@ export class AppModel {
 	public notes:Note[] = [];
 	public alerts = [];
 	public error = null;
-	public currentNote = null;
+	public noteName = '';
+	public noteState = { None:0, NoNotes: 1};
+
+	public state = this.noteState.None;
 	
 	constructor(private svc:NoteService){}
 
@@ -34,7 +37,8 @@ export class AppModel {
 					this.securityToken = null;
 					this.error = null;
 					this.alerts = null;
-					this.currentNote = null;
+					this.noteName = '';
+					this.state = this.noteState.None;
 					console.log('logout: end');
 				},
 				err => this.error = {disc: err}
@@ -47,7 +51,8 @@ export class AppModel {
 		return this.svc.insertNote(note, this.securityToken)
 			.subscribe(
 				()=> {
-					this.currentNote = null;
+					this.noteName = '';
+					this.state = this.noteState.None;
 					console.log('save: end');
 				},
 				err => this.error = {disc: err}
@@ -60,12 +65,13 @@ export class AppModel {
 		return this.svc.getNotes(key, this.securityToken)
 			.subscribe(
 				notes => {
-					this.currentNote = {};
-					if(notes.length === 0) {
-						this.currentNote.status = 'not found';
-					}
-					this.currentNote.name = key;
+					this.state = this.noteState.None;
 					this.error = null;
+					
+					this.noteName = key;
+					
+					if(notes.length === 0) 
+						this.state = this.noteState.NoNotes;
 					this.notes = notes;
 
 					console.log('find: end');
@@ -80,6 +86,7 @@ export class AppModel {
 		return this.svc.removeNote(id, this.securityToken)
 			.subscribe(
 				note => {
+					this.state = this.noteState.None;
 					this.error = null;
 					let deletedItem = this.notes.find(function(x:any) {
 						return x._id === note._id;
@@ -88,6 +95,10 @@ export class AppModel {
 
 					if (index > -1) {
 						this.notes.splice(index, 1);
+						
+						if(this.notes.length === 0)
+							this.state = this.noteState.NoNotes;
+							
 						this.alerts.push({disc: 'Note had been deleted'});
 						console.log('remove: end');
 						return;
@@ -104,6 +115,7 @@ export class AppModel {
 		return this.svc.updateNote(note, this.securityToken)
 			.subscribe(
 				note => {
+					this.state = this.noteState.None;
 					this.error = null;
 					console.log('update: end');
 				},

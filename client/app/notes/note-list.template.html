@@ -29,8 +29,8 @@
 				<a href="#" class="close" (click)="onCloseErrorAlert()">×</a>
 				{{app.error.disc}}</div>
 		</div>
-		<h2 *ngIf = "app.currentNote" class="text-left">{{ app.currentNote.name }}</h2>
-		<span *ngIf = "app.currentNote">{{ app.currentNote.status }}</span>
+		<h2 class="text-left">{{ app.noteName }}</h2>
+		<span *ngIf = "app.state === 1">No notes...</span>
 		<div class="list-item" *ngFor="let note of app.notes">
 			<pre class="note-value" #noteText contenteditable="true" (blur)="onEditCompleteClick(note, noteText)"> {{ note.text | trim }} </pre>
 			<a href="#" class="icon-remove" (click)="onDeleteClick(note._id)">
