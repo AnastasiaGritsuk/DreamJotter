@@ -41,6 +41,7 @@ export class AppModel {
 					this.securityToken = null;
 					this.alerts = null;
 					this.resetNoteState(null);
+
 					console.log('logout: end');
 				},
 				err => this.error = {disc: err}
@@ -55,6 +56,7 @@ export class AppModel {
 				()=> {
 					this.resetNoteState(null);
 					this.alerts.push(this.alertState.saved);
+
 					console.log('save: end');
 				},
 				err => this.error = {disc: err}
@@ -68,9 +70,7 @@ export class AppModel {
 			.subscribe(
 				notes => {
 					this.resetNoteState(key);
-					
-					if(notes.length === 0) 
-						this.state = this.noteState.NoNotes;
+					this.setNoteState(notes);
 					this.notes = notes;
 
 					console.log('find: end');
@@ -87,11 +87,9 @@ export class AppModel {
 				note => {
 					this.resetNoteState(note.name);
 					this.notes = this.removeElementFromArray(this.notes, note);
-
-					if(this.notes.length === 0)
-						this.state = this.noteState.NoNotes;
-
+					this.setNoteState(this.notes);
 					this.alerts.push(this.alertState.deleted);
+
 					console.log('remove: end');
 				},
 				err => this.error = {disc: err}
@@ -130,5 +128,10 @@ export class AppModel {
 		this.state = this.noteState.None;
 		this.error = null;
 		this.noteName = name || '';
+	}
+
+	setNoteState(notes) {
+		if(notes.length === 0)
+			this.state = this.noteState.NoNotes;
 	}
 }
