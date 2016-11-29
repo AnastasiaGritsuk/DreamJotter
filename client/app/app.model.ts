@@ -75,6 +75,8 @@ export class AppModel {
 	}
 
 	remove(id:string) {
+		console.log('remove: begin');
+
 		return this.svc.removeNote(id, this.securityToken)
 			.subscribe(
 				note => {
@@ -97,6 +99,8 @@ export class AppModel {
 	}
 	
 	update(note:Note) {
+		console.log('update: begin');
+
 		return this.svc.updateNote(note, this.securityToken)
 			.subscribe(
 				note => {
