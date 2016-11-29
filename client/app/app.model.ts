@@ -39,10 +39,8 @@ export class AppModel {
 			.subscribe(
 				() => {
 					this.securityToken = null;
-					this.error = null;
 					this.alerts = null;
-					this.noteName = '';
-					this.state = this.noteState.None;
+					this.resetNoteState(null);
 					console.log('logout: end');
 				},
 				err => this.error = {disc: err}
@@ -55,8 +53,7 @@ export class AppModel {
 		return this.svc.insertNote(note, this.securityToken)
 			.subscribe(
 				()=> {
-					this.noteName = '';
-					this.state = this.noteState.None;
+					this.resetNoteState(null);
 					this.alerts.push(this.alertState.saved);
 					console.log('save: end');
 				},
@@ -70,10 +67,7 @@ export class AppModel {
 		return this.svc.getNotes(key, this.securityToken)
 			.subscribe(
 				notes => {
-					this.state = this.noteState.None;
-					this.error = null;
-					
-					this.noteName = key;
+					this.resetNoteState(key);
 					
 					if(notes.length === 0) 
 						this.state = this.noteState.NoNotes;
@@ -91,24 +85,14 @@ export class AppModel {
 		return this.svc.removeNote(id, this.securityToken)
 			.subscribe(
 				note => {
-					this.state = this.noteState.None;
-					this.error = null;
-					let deletedItem = this.notes.find(function(x:any) {
-						return x._id === note._id;
-					});
-					var index = this.notes.indexOf(deletedItem);
+					this.resetNoteState(note.name);
+					this.notes = this.removeElementFromArray(this.notes, note);
 
-					if (index > -1) {
-						this.notes.splice(index, 1);
-						
-						if(this.notes.length === 0)
-							this.state = this.noteState.NoNotes;
-							
-						this.alerts.push(this.alertState.deleted);
-						console.log('remove: end');
-						return;
-					}
-					console.log('remove: something went wrong');
+					if(this.notes.length === 0)
+						this.state = this.noteState.NoNotes;
+
+					this.alerts.push(this.alertState.deleted);
+					console.log('remove: end');
 				},
 				err => this.error = {disc: err}
 			);
@@ -120,8 +104,7 @@ export class AppModel {
 		return this.svc.updateNote(note, this.securityToken)
 			.subscribe(
 				note => {
-					this.state = this.noteState.None;
-					this.error = null;
+					this.resetNoteState(note.name);
 					console.log('update: end');
 				},
 				err => this.error = {disc: err}
@@ -130,5 +113,22 @@ export class AppModel {
 
 	getLogged() {
 		return this.securityToken !== null;
+	}
+
+	removeElementFromArray(arr, el) {
+		let deletedItem = arr.find(function(x:any) {
+			return x._id === el._id;
+		});
+		var index = arr.indexOf(deletedItem);
+		if (index > -1) {
+			arr.splice(index, 1);
+		}
+		return arr;
+	}
+
+	resetNoteState(name) {
+		this.state = this.noteState.None;
+		this.error = null;
+		this.noteName = name || '';
 	}
 }
