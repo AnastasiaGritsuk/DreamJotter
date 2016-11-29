@@ -10,6 +10,10 @@ export class AppModel {
 	public error = null;
 	public noteName = '';
 	public noteState = { None:0, NoNotes: 1};
+	public alertState = {
+		saved: { type:'success', disc: 'Note has been saved'},
+		deleted: { type:'info', disc: 'Note has been deleted'}
+	}
 
 	public state = this.noteState.None;
 	
@@ -53,6 +57,7 @@ export class AppModel {
 				()=> {
 					this.noteName = '';
 					this.state = this.noteState.None;
+					this.alerts.push(this.alertState.saved);
 					console.log('save: end');
 				},
 				err => this.error = {disc: err}
@@ -99,7 +104,7 @@ export class AppModel {
 						if(this.notes.length === 0)
 							this.state = this.noteState.NoNotes;
 							
-						this.alerts.push({disc: 'Note had been deleted'});
+						this.alerts.push(this.alertState.deleted);
 						console.log('remove: end');
 						return;
 					}
