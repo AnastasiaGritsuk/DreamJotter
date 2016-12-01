@@ -82,6 +82,9 @@ gulp.task('dist', function () {
     gulp.src('server/routes/**/*')
         .pipe(gulp.dest('../dist/server/routes'));
 
+    gulp.src('server/*.js')
+        .pipe(gulp.dest('../dist/server'));
+
     gulp.src('client/views/**/*')
         .pipe(gulp.dest('../dist/client/views'));
 
